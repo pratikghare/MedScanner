@@ -1,0 +1,51 @@
+.app{ 
+  background: url("./assets/hero.avif") center no-repeat;
+  min-height: 100vh;
+}
+
+.bg-hero {
+  background: url("assets/hero.png");
+  // background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), url("assets/hero.png");
+  background-size: cover;
+  background-position: right;
+  background-repeat: no-repeat;
+  min-height: 200px;
+}
+.bg-hero-1 {
+  background: url("assets/undraw_medicine_hqqg.svg");
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  min-height: 200px;
+}
+.bg-hero-2 {
+  background: url("assets/undraw_medical-care_7m9g.svg");
+  background-size: contain;
+  background-position: right;
+  background-repeat: no-repeat;
+  min-height: 200px;
+}
+
+.transition-ease {
+  transition: all 200ms ease-in-out;
+}
+
+
+
+
+@media screen and (min-width: 640px) {
+  .sm\:bg-hero {
+    background: url("assets/undraw_medicine_hqqg.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 200px;
+  }
+  .sm\:bg-hero-2 {
+    background: url("assets/undraw_medical-care_7m9g.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 200px;
+  }
+}
