@@ -19,7 +19,7 @@ export default function NavigationTabs() {
         <div className="fixed bottom-0 pb-2 flex justify-center w-full ">
             <Tabs size="lg" aria-label="Options" color="primary"
                 variant={selected?.theme === "light" ? "bordered" : "solid"} selectedKey={selected.key}
-                className="backdrop-blur-sm"
+                className="backdrop-blur-sm rounded-2xl"
                 onSelectionChange={(key) => changeTab(key)}
             >
                 {

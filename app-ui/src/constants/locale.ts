@@ -38,6 +38,6 @@ export const pharmacyImages = [
     { name: 'MyUpchar', image: myUpcharLogo },
     { name: 'Pasumai Pharmacy', image: pasumaiPharmacyLogo },
     { name: 'Flipkart Health', image: flipkartLogo },
-    { name: 'Tata 1mg', image: tata1mgLogo, lightBG: true },
+    { name: 'Tata 1mg', image: tata1mgLogo, className: "-mb-2 bg-white bg-opacity-40 rounded-sm" },
     { name: 'Truemeds', image: truemedsLogo },
 ];

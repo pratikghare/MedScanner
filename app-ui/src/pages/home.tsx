@@ -93,13 +93,13 @@ function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
     return (
         <div className="backdrop-blur-sm backdrop-opacity-70 md:backdrop-blur-none sm:flex-nowrap flex items-center overflow-hidden w-full p-2 gap-1 text-xs">
             {
-                pharmacyImages.map((image) => (
-                    <div className="group">
+                pharmacyImages.map((image, index) => (
+                    <div className="group" key={image.className + "-" + index}>
                         <img
                             src={image.image}
                             alt={image.name}
                             width={size} height={size}
-                            className={" " + (!props.theme || props.theme === "dark" ? (image.lightBG ? "bg-white bg-opacity-25 rounded-sm sm:grayscale" : "sm:grayscale") : "")}
+                            className={(!props.theme || props.theme === "dark" ? "sm:grayscale" : "") + " " + image.className }
                             draggable="false"
                             onContextMenu={(e) => e.preventDefault()}
                         />

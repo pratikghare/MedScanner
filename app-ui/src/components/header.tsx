@@ -12,12 +12,17 @@ import {
     DropdownMenu,
     DropdownTrigger,
     DropdownSection,
+    NumberInput,
+    PopoverContent,
+    Popover,
+    PopoverTrigger,
+    Spinner,
 } from "@heroui/react";
 import { APP_NAME } from "../constants/locale";
 import { ThemeSwitch } from "./theme-switch";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { LocationIcon } from "./icons";
-import { getGeoLocationDetails } from "../services/LocationService";
+import { getGeoLocationDetails, getLocationByAddress } from "../services/LocationService";
 import { useNavigate } from "react-router";
 
 export const AppLogo = () => {
@@ -36,7 +41,7 @@ export const AppLogo = () => {
 const CurrentLocation = (props: { text?: string }) => {
     return (
         <span className="flex items-center">
-            <LocationIcon className="size-4 mr-1" /> { props.text ? props.text : "Current Location" }
+            <LocationIcon className="size-4 mr-1" /> {props.text ? props.text : "Enable Permissions"}
         </span>
     );
 }
@@ -46,34 +51,56 @@ export default function Header() {
     const [profileSub, setProfileSub] = useState<ReactNode>();
     const position = useGeoLocation();
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [loader, setLoader] = useState<boolean>(false);
 
     useEffect(() => {
-        if(position) {
+        if (position) {
             getGeoLocationDetails(position.latitude, position.longitude).then(data => {
                 setProfileSub(<CurrentLocation text={`${data.city} (${data.postcode})`} />)
             })
         }
         else setProfileSub(<CurrentLocation />);
     }, [position])
+    
+    const onInputChange = (event: any) => {
+        const term: string = event.target.value ? String(event.target.value).split(",").join("") : "";
+        if(event.key === "Enter") {
+            setLoader(true);
+            if(term.length > 2) {
+                getLocationByAddress(term).then((data: any) => {
+                    console.log(data);
+                    setProfileSub(<CurrentLocation text={`${data.city ? data.city : data.county ? data.county : data.state} (${data.postcode})`} />)
+                }).finally(() => {
+                    setIsOpen(false);
+                    setLoader(false);
+                })
+            }
+            else {
+                setIsOpen(false);
+                setLoader(false);
+            }
+        }
+    }
 
     const logOut = () => {
         setIsLoggedIn(false);
     }
 
     return (
-        <Navbar classNames={{ wrapper: "justify-center sm:justify-between" }}>
-            <NavbarContent className="justify-center sm:justify-start">
-                <NavbarBrand onClick={() => navigate("/")} className="cursor-pointer justify-center sm:justify-start">
+        <Navbar classNames={{ wrapper: "" }}>
+            <NavbarContent className="">
+                <NavbarBrand onClick={() => navigate("/")} className="cursor-pointer">
                     <AppLogo />
                     <p className="font-bold text-inherit">{APP_NAME}</p>
                 </NavbarBrand>
             </NavbarContent>
 
-            
-            <NavbarContent justify="end" className="hidden sm:flex">
+
+            <NavbarContent justify="end" className="hidden">
                 {
                     isLoggedIn ?
-                        <NavbarItem className="lg:flex -mb-1">
+                        <NavbarItem aria-labelledby="User Icon" className="lg:flex -mb-1">
                             <Dropdown placement="bottom-start">
                                 <DropdownTrigger>
                                     <User
@@ -102,7 +129,7 @@ export default function Header() {
                                         <DropdownItem key="configurations" textValue="configurations">Configurations</DropdownItem>
                                         <DropdownItem key="help_and_feedback" textValue="help_and_feedback">Help & Feedback</DropdownItem>
                                     </DropdownSection>
-                                
+
                                     <DropdownSection>
                                         <DropdownItem key="logout" color="danger" onPress={logOut}>
                                             Log Out
@@ -124,6 +151,62 @@ export default function Header() {
                     <ThemeSwitch />
                 </NavbarItem>
 
+            </NavbarContent>
+
+            <NavbarContent justify="end">
+                <NavbarItem>
+                    <Popover
+                        isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)}
+                        showArrow
+                        backdrop="blur"
+                        classNames={{
+                            base: [
+                                // arrow color
+                                "before:bg-default-200",
+                            ],
+                            content: [
+                                "max-w-[200px] px-2 border border-default-200",
+                                "bg-gradient-to-br from-white to-default-300",
+                                "dark:from-default-100 dark:to-default-50",
+                            ],
+                        }}
+                        placement="right"
+                    >
+                        <PopoverTrigger>
+                            <Button className="capitalize flex" color="default" variant="light">
+                                <div className="flex flex-col items-end">
+                                    <span className="font-bold text-sm">{"Other"}</span>
+                                    <span className="text-xs flex">
+                                        <span>{profileSub}</span>
+                                    </span>
+                                </div>
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                            <div className="px-1 py-2 w-full">
+                                <p className="text-xs font-bold text-foreground">
+                                    Enter location manually
+                                </p>
+                                <div className="mt-2 flex flex-col gap-2 w-full">
+                                    <NumberInput aria-labelledby="location popover input" 
+                                        autoFocus size="sm" variant="bordered" hideStepper 
+                                        onKeyUp={onInputChange} 
+                                        classNames={{ inputWrapper: loader ? "" : "pr-0" }}
+                                        // endContent={<Spinner className={loader ? "visible" : "invisible"} size="sm" color="primary" />}
+                                        endContent={
+                                            loader ? <Spinner size="sm" color="primary" /> : 
+                                            <Button variant="light" className="text-red-500" isIconOnly><LocationIcon /></Button>
+                                        }
+                                    />
+                                </div>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                </NavbarItem>
+
+                <NavbarItem className="">
+                    <ThemeSwitch />
+                </NavbarItem>
             </NavbarContent>
         </Navbar>
     );
