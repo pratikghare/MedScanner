@@ -1,1 +1,1 @@
-export const apiUrl = "https://medscanner.onrender.com";
+export const apiUrl = "http://192.168.0.198:4000/graphql";
