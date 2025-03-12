@@ -1,7 +1,8 @@
 import { ApolloClient, DocumentNode, InMemoryCache } from "@apollo/client";
+import { env } from "../env/env";
 
 const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    uri: env.apiUrl,
     cache: new InMemoryCache(),
 });
 

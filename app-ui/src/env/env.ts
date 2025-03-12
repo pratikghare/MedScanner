@@ -1,9 +1,4 @@
-let env;
+import * as devEnv from "./env.dev";
+import * as prodEnv from "./env.prod";
 
-if (process.env.NODE_ENV === "production") {
-  env = require("./env.prod").default;
-} else {
-  env = require("./env.dev").default;
-}
-
-export default env;
+export const env = process.env.NODE_ENV === "production" ? prodEnv : devEnv;
