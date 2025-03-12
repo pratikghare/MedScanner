@@ -1,4 +1,4 @@
-import { Button, image, Input, Skeleton, Spinner } from "@heroui/react";
+import { Button, Input, Skeleton, Spinner } from "@heroui/react";
 import { ExternalIcon, SearchIcon, XMarkIcon } from "../components/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
