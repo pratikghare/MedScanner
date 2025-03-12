@@ -1,5 +1,5 @@
-import { getLocation } from "graphql";
 import { geofyApiKeys } from "../env/env.prod";
+import { decrypt } from "../cryptr";
 
 interface Location {
     countryCode: string,
@@ -19,7 +19,7 @@ const geofyGeoCodeApi = `https://api.geoapify.com/v1/geocode/reverse?lat={lat}&l
 const getfyPostCodeApi = `https://api.geoapify.com/v1/geocode/search?text={text}&format=json&apiKey=`;
 
 const resolveUrl = (url: string) => {
-    return url+geofyApiKeys[0];
+    return url+decrypt(geofyApiKeys[0]);
 }
 
 
