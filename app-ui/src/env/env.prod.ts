@@ -9,3 +9,4 @@ export const openWeatherApi = `https://api.openweathermap.org/data/2.5/weather?l
 const geoApifyKey = "9a13ff85de154606899b72e4f42d71ca";
 export const geoApifyRevGeoCodeApi = `https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&apiKey=${geoApifyKey}`;
 export const getApifyPostCodeApi = `https://api.geoapify.com/v1/geocode/search?text={text}&format=json&apiKey=${geoApifyKey}`;
+export const apiUrl = "http://localhost:4000";

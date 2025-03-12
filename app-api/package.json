@@ -16,6 +16,7 @@
     "@graphql-tools/merge": "^9.0.22",
     "@graphql-tools/schema": "^10.0.21",
     "apollo-server": "^3.13.0",
+    "cryptr": "^6.3.0",
     "graphql": "^16.10.0"
   },
   "devDependencies": {

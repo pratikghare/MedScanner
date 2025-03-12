@@ -73,8 +73,8 @@ function SearchResults({ results, theme, classNames }: { results: Array<any>, th
                 results.length > 0 ?
                     <div className={"invisible cursor-default justify-self-start rounded-lg p-4 w-full flex items-center gap-3 mt-4 " + classNames}>
                         <div className="w-full flex flex-col">
-                            <span className="text-sm">{results[results.length - 1].medicineName}</span>
-                            <span className="text-xs text-gray-500">{results[results.length - 1].packSize}</span>
+                            <span className="text-sm">--</span>
+                            <span className="text-xs text-gray-500">--</span>
                         </div>
                     </div> :
                     <div className={"cursor-default justify-self-start rounded-lg p-4 w-full flex items-center gap-3 mt-4 " + classNames}>

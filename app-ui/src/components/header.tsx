@@ -22,7 +22,7 @@ import { APP_NAME } from "../constants/locale";
 import { ThemeSwitch } from "./theme-switch";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { LocationIcon } from "./icons";
-import { getGeoLocationDetails, getLocationByAddress } from "../services/LocationService";
+import { getGeoLocationDetails, getLocationByPostCode } from "../services/location-service";
 import { useNavigate } from "react-router";
 
 export const AppLogo = () => {
@@ -56,8 +56,8 @@ export default function Header() {
 
     useEffect(() => {
         if (position) {
-            getGeoLocationDetails(position.latitude, position.longitude).then(data => {
-                setProfileSub(<CurrentLocation text={`${data.city} (${data.postcode})`} />)
+            getGeoLocationDetails(String(position.latitude), String(position.longitude)).then(data => {
+                setProfileSub(<CurrentLocation text={`${data.city} (${data.postCode})`} />)
             })
         }
         else setProfileSub(<CurrentLocation />);
@@ -68,9 +68,9 @@ export default function Header() {
         if(event.key === "Enter") {
             setLoader(true);
             if(term.length > 2) {
-                getLocationByAddress(term).then((data: any) => {
+                getLocationByPostCode(term).then((data: any) => {
                     console.log(data);
-                    setProfileSub(<CurrentLocation text={`${data.city ? data.city : data.county ? data.county : data.state} (${data.postcode})`} />)
+                    setProfileSub(<CurrentLocation text={`${data.city ? data.city : data.county ? data.county : data.state} (${data.postCode})`} />)
                 }).finally(() => {
                     setIsOpen(false);
                     setLoader(false);
