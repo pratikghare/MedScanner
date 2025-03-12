@@ -1,0 +1,68 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "datasource": {
+                    "sourcename": "openstreetmap",
+                    "attribution": "© OpenStreetMap contributors",
+                    "license": "Open Database License",
+                    "url": "https://www.openstreetmap.org/copyright"
+                },
+                "name": "Siddharth Free Reading Room & Library",
+                "country": "India",
+                "country_code": "in",
+                "state": "Maharashtra",
+                "county": "Pune District",
+                "city": "Pune",
+                "postcode": "411002",
+                "suburb": "Kasba Peth",
+                "street": "Shivaji Road",
+                "lon": 73.8567437,
+                "lat": 18.5204303,
+                "state_code": "MH",
+                "distance": 0.08099403403184027,
+                "result_type": "amenity",
+                "formatted": "Siddharth Free Reading Room & Library, Shivaji Road, Kasba Peth, Pune - 411002, MH, India",
+                "address_line1": "Siddharth Free Reading Room & Library",
+                "address_line2": "Shivaji Road, Kasba Peth, Pune - 411002, MH, India",
+                "category": "education.library",
+                "timezone": {
+                    "name": "Asia/Kolkata",
+                    "offset_STD": "+05:30",
+                    "offset_STD_seconds": 19800,
+                    "offset_DST": "+05:30",
+                    "offset_DST_seconds": 19800,
+                    "abbreviation_STD": "IST",
+                    "abbreviation_DST": "IST"
+                },
+                "plus_code": "7JCMGVC4+5M",
+                "plus_code_short": "C4+5M Pune, Pune District, India",
+                "rank": {
+                    "importance": 0.00000999999999995449,
+                    "popularity": 4.435950454709121
+                },
+                "place_id": "51752387e3d476524059f4588eeb3a853240f00103f90166d641c102000000c0020192032553696464686172746820467265652052656164696e6720526f6f6d2026204c696272617279"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    73.8567437,
+                    18.5204303
+                ]
+            },
+            "bbox": [
+                73.8566937,
+                18.5203803,
+                73.8567937,
+                18.5204803
+            ]
+        }
+    ],
+    "query": {
+        "lat": 18.52043,
+        "lon": 73.856743,
+        "plus_code": "7JCMGVC4+5M"
+    }
+}
