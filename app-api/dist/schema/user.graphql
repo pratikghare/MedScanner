@@ -1,0 +1,11 @@
+type User {
+    userId: ID!
+    emailId: String
+    password: String!
+    phone: Int
+}
+
+extend type Query {
+    getUser(userId: String, password: String!, emailId: String): User
+    getAllUsers: [User!]!
+}
