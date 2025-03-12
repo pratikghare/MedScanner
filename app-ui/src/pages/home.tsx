@@ -60,7 +60,7 @@ function SearchResults({ results, theme, classNames }: { results: Array<Medicine
                 results.map((result: Medicine, index: number) => (
                     <div key={"search-result-item-" + index} className={"cursor-default justify-self-start justify-between rounded-lg p-4 w-full flex items-center gap-6 mt-4 " + classNames}>
                         <div>
-                            <img src={result.images[0]} alt={result.productId} className="w-20 max-h-20 rounded-sm"  />
+                            <img src={result.images[0]} alt={result.productId} className="w-20 max-h-20 rounded-sm" />
                         </div>
                         <div className="w-full flex flex-col">
                             <span className="text-sm">{result.name}</span>
@@ -103,7 +103,7 @@ function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
                             src={image.image}
                             alt={image.name}
                             width={size} height={size}
-                            className={(!props.theme || props.theme === "dark" ? "sm:grayscale" : "") + " " + image.className }
+                            className={(!props.theme || props.theme === "dark" ? "sm:grayscale" : "") + " " + image.className}
                             draggable="false"
                             onContextMenu={(e) => e.preventDefault()}
                         />
@@ -128,11 +128,11 @@ export default function Home() {
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        if(debounceRef.current) clearTimeout(debounceRef.current);
+        if (debounceRef.current) clearTimeout(debounceRef.current);
 
         if (value.length > 2) {
             setLoader(true);
-            
+
             debounceRef.current = setTimeout(() => {
                 getMedicinesByName(value).then((data: Array<Medicine>) => {
                     setResults(data);
@@ -181,6 +181,9 @@ export default function Home() {
                             loader &&
                             [1, 2, 3, 4].map((index: number) => (
                                 <div key={"search-result-skeleton-" + index} className={"justify-self-start rounded-lg p-4 w-full flex items-center gap-3 mt-4 " + (selected.theme === "light" ? "border" : "bg-[#27272A]")}>
+                                    <div>
+                                        <Skeleton className="flex rounded-md w-10 h-12" />
+                                    </div>
                                     <div className="w-full flex flex-col gap-2">
                                         <Skeleton className="h-3 w-4/5 rounded-lg" />
                                         <Skeleton className="h-3 w-5/5 rounded-lg" />
