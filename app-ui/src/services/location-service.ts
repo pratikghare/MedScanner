@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 import { useClient } from "./graphql-service";
+import { AddressLocation } from "../models/location";
 
 const GET_GEO_LOCATION = gql`
     query GetGeoCodeLocation($latitude: String!, $longitude: String!) {
@@ -28,12 +29,11 @@ const GET_POSTCODE_LOCATION = gql`
 `;
 
 
-export function getGeoLocationDetails(latitude: string, longitude: string): Promise<any> {
-    // return useClient(GET_GEO_LOCATION, { latitude, longitude }).then((data: any) => data.getGeoCodeLocation)
+export function getGeoLocationDetails(latitude: string, longitude: string): Promise<AddressLocation> {
     return useClient(GET_GEO_LOCATION, { latitude, longitude }).then((data: any) => data.getGeoCodeLocation)
 }
 
-export function getLocationByPostCode(postCode: string): Promise<any> {
+export function getLocationByPostCode(postCode: string): Promise<AddressLocation> {
     return useClient(GET_POSTCODE_LOCATION, { postCode }).then((data: any) => data.getLocationByPostCode)
 }
 

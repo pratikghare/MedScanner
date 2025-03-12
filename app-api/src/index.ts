@@ -7,8 +7,8 @@ import { typeDefs } from "./schema/schema.export";
 const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 // Start Apollo Server
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({ schema, cors: { origin: "*", credentials: true } });
 
-server.listen().then(({ url }) => {
+server.listen({ port: 4000, host: "0.0.0.0" }).then(({ url }) => {
   console.log(`🚀 Server running on ${url}`);
 });

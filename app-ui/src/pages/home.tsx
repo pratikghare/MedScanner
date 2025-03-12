@@ -1,11 +1,12 @@
-import { Button, Input, Skeleton, Spinner } from "@heroui/react";
+import { Button, image, Input, Skeleton, Spinner } from "@heroui/react";
 import { ExternalIcon, SearchIcon, XMarkIcon } from "../components/icons";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { useEffect, useState } from "react";
-import data from "../constants/data.json";
+import { useEffect, useRef, useState } from "react";
 import { pharmacyImages } from "../constants/locale";
 import { NavigationTab } from "../models";
+import { getMedicinesByName } from "../services/medicine-query-service";
+import { Medicine } from "../models/products";
 
 interface LandingProps {
     selected: NavigationTab;
@@ -51,16 +52,19 @@ function Landing({ selected, inputValue, activeSearchFocus, setInputValue, setSe
     );
 }
 
-function SearchResults({ results, theme, classNames }: { results: Array<any>, theme: string | undefined, classNames?: string }) {
+function SearchResults({ results, theme, classNames }: { results: Array<Medicine>, theme: string | undefined, classNames?: string }) {
     return (
         <>
             {
                 results.length > 0 &&
-                results.map((result: any, index: number) => (
+                results.map((result: Medicine, index: number) => (
                     <div key={"search-result-item-" + index} className={"cursor-default justify-self-start justify-between rounded-lg p-4 w-full flex items-center gap-6 mt-4 " + classNames}>
+                        <div>
+                            <img src={result.images[0]} alt={result.productId} className="w-20 max-h-20 rounded-sm"  />
+                        </div>
                         <div className="w-full flex flex-col">
-                            <span className="text-sm">{result.medicineName}</span>
-                            <span className="text-xs text-gray-500">{result.packSize}</span>
+                            <span className="text-sm">{result.name}</span>
+                            <span className="text-xs text-gray-500">{result.manufacturer}</span>
                         </div>
                         <Button size="sm" color="primary" className="px-6" variant={theme === "light" ? "flat" : "solid"}>
                             <span>Compare</span>
@@ -118,22 +122,24 @@ export default function Home() {
     const [value, setValue] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
     const [isFetched, setIsFetched] = useState<boolean>(false);
-    const [results, setResults] = useState<Array<any>>([]);
+    const [results, setResults] = useState<Array<Medicine>>([]);
     const [searchActive, setSearchActive] = useState<boolean>(false);
     const [activeSearchFocus, setActiveSearchFocus] = useState<boolean>(false);
-
-    const filterData = (term: string) => {
-        setResults(data.filter((item) => String(item.medicineName).toLocaleLowerCase().includes(term.toLocaleLowerCase())));
-    }
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
+        if(debounceRef.current) clearTimeout(debounceRef.current);
+
         if (value.length > 2) {
             setLoader(true);
-            filterData(value);
-            setTimeout(() => {
-                setLoader(false);
-                setIsFetched(true);
-            }, 3000)
+            
+            debounceRef.current = setTimeout(() => {
+                getMedicinesByName(value).then((data: Array<Medicine>) => {
+                    setResults(data);
+                    setLoader(false);
+                    setIsFetched(true);
+                });
+            }, 500);
         }
         else {
             setLoader(false);

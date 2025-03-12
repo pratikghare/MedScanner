@@ -1,7 +1,7 @@
 import { getLocation } from "graphql";
 import { geofyApiKeys } from "../env/env.prod";
 
-interface Address {
+interface Location {
     countryCode: string,
     country: string,
     state: string,
@@ -36,7 +36,7 @@ const getGeoCodeLocation = async (_: any, { latitude, longitude } : { latitude: 
         const data = result.features[0].properties;
         
         if(!data) return null;
-        const location: Address = {
+        const location: Location = {
             countryCode: data.country_code,
             country: data.country,
             state: data.state,
@@ -69,7 +69,7 @@ const getLocationByPostCode = async (_: any, { postCode } : { postCode: string }
         const data = result.results.find((item: any) => item.country_code === "in");
         
         if(!data) return null;
-        const location: Address = {
+        const location: Location = {
             countryCode: data.country_code,
             country: data.country,
             state: data.state,

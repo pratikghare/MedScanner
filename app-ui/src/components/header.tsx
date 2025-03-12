@@ -49,19 +49,21 @@ const CurrentLocation = (props: { text?: string }) => {
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
     const [profileSub, setProfileSub] = useState<ReactNode>();
-    const position = useGeoLocation();
+    const geoLocation = useGeoLocation();
     const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
 
     useEffect(() => {
-        if (position) {
+        const { position, error } = geoLocation;
+        console.log("postion", position)
+        if (position && !error) {
             getGeoLocationDetails(String(position.latitude), String(position.longitude)).then(data => {
                 setProfileSub(<CurrentLocation text={`${data.city} (${data.postCode})`} />)
             })
         }
         else setProfileSub(<CurrentLocation />);
-    }, [position])
+    }, [geoLocation.position, geoLocation.error])
     
     const onInputChange = (event: any) => {
         const term: string = event.target.value ? String(event.target.value).split(",").join("") : "";
@@ -69,7 +71,6 @@ export default function Header() {
             setLoader(true);
             if(term.length > 2) {
                 getLocationByPostCode(term).then((data: any) => {
-                    console.log(data);
                     setProfileSub(<CurrentLocation text={`${data.city ? data.city : data.county ? data.county : data.state} (${data.postCode})`} />)
                 }).finally(() => {
                     setIsOpen(false);
