@@ -192,6 +192,7 @@ export default function Header() {
                                     <NumberInput aria-labelledby="location popover input" 
                                         autoFocus size="sm" variant="bordered" hideStepper 
                                         onKeyUp={onInputChange} 
+                                        placeholder="Postcode"
                                         classNames={{ inputWrapper: loader ? "" : "pr-0" }}
                                         // endContent={<Spinner className={loader ? "visible" : "invisible"} size="sm" color="primary" />}
                                         endContent={
