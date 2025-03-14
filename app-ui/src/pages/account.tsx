@@ -1,12 +1,12 @@
 import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, } from "@heroui/react";
-import { ActivityIcon, CalendarDateRangeIcon, ChevronDown, ChevronRight, ComputerMonitorIcon, DoubleChatBubbleIcon, MoonFilledIcon, SunFilledIcon } from "../components/icons";
+import { ActivityIcon, CalendarDateRangeIcon, ChatBubbleTextIcon, ChevronDown, ChevronRight, ComputerMonitorIcon, DoubleChatBubbleIcon, MoonFilledIcon, PowerIcon, SunFilledIcon } from "../components/icons";
 import { ReactNode, useEffect, useState } from "react";
 import { useTheme } from "@heroui/use-theme";
 
 
 const CardItem = (props: { setSelected: Function, selected?: string, keyId: string, header: ReactNode, footerText: string, theme?: string, className?: string, footer?: ReactNode }) => {
     const updateSelected = () => {
-        if(props.keyId === "logout") return;
+        if (props.keyId === "logout") return;
         props.selected === props.keyId ? props.setSelected("") : props.setSelected(props.keyId);
     }
 
@@ -20,10 +20,10 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
                 <CardFooter className={"hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
                     {
                         props.footer ? props.footer :
-                        <button className="w-full h-full flex justify-between text-xs p-3" onClick={updateSelected}>
-                            <span>{props.footerText}</span>
-                            { props.selected === props.keyId ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
-                        </button>
+                            <button className="w-full h-full flex justify-between text-xs p-3" onClick={updateSelected}>
+                                <span>{props.footerText}</span>
+                                {props.selected === props.keyId ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
+                            </button>
                     }
                 </CardFooter>
             </Card>
@@ -70,7 +70,7 @@ export default function Account() {
             {
                 selected === "profile" &&
                 <div className="mb-4 flex w-full">
-                    SELECTED { selected }
+                    SELECTED {selected}
                 </div>
             }
 
@@ -79,7 +79,7 @@ export default function Account() {
                 <CardItem className={selected === "reviews" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"reviews"} header={<DoubleChatBubbleIcon />} footerText={"Reviews"} theme={theme} />
                 <CardItem className={selected === "theme" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"theme"} header={
                     theme == "system" ? <ComputerMonitorIcon />
-                    : theme === "light" ? <SunFilledIcon /> : <MoonFilledIcon />
+                        : theme === "light" ? <SunFilledIcon /> : <MoonFilledIcon />
                 }
                     footerText={"Appearance"} theme={theme}
                     footer={
@@ -107,15 +107,21 @@ export default function Account() {
                         </Dropdown>
                     }
                 />
-                <CardItem className={selected === "activity" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"activity"} header={<ActivityIcon />} footerText={"Activity"} theme={theme} />
-                <CardItem className={selected === "feedback" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"feedback"} header={<ActivityIcon />} footerText={"Feedback"} theme={theme} />
-                <CardItem className={selected === "logout" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"logout"} header={<ActivityIcon />} footerText={"Logout"} theme={theme} />
+                <CardItem className={selected === "activity" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected}
+                    setSelected={setSelected} keyId={"activity"} header={<ActivityIcon />} footerText={"Activity"} theme={theme}
+                />
+                <CardItem className={selected === "feedback" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected}
+                    setSelected={setSelected} keyId={"feedback"} header={<ChatBubbleTextIcon />} footerText={"Feedback"} theme={theme}
+                />
+                <CardItem className={selected === "logout" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected}
+                    setSelected={setSelected} keyId={"logout"} header={<PowerIcon />} footerText={"Logout"} theme={theme}
+                />
             </div>
 
             {
                 selected !== "profile" && selected.length > 0 &&
                 <div className="mb-4 flex w-full">
-                    SELECTED { selected }
+                    SELECTED {selected}
                 </div>
             }
         </section>

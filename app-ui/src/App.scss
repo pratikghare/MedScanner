@@ -55,7 +55,7 @@
 // Account 
 .account-grid{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(163px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   grid-gap: 1em;
   .active{
     grid-column: span auto;
