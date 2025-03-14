@@ -8,12 +8,12 @@ export const encrypt = (value: string) => cryptr.encrypt(value);
 
 
 
-const obj = {
-    city: "Pimpri",
-    state: "Maharashtra",
-    county: "Pune",
-    postCode: "411012",
-    countryCode: "in",
-    country: "India",
-    __typename: "Location"
-};
+// const obj = {
+//     city: "Pimpri",
+//     state: "Maharashtra",
+//     county: "Pune",
+//     postCode: "411012",
+//     countryCode: "in",
+//     country: "India",
+//     __typename: "Location"
+// };

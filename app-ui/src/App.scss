@@ -57,10 +57,16 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(163px, 1fr));
   grid-gap: 1em;
+  .active{
+    grid-column: span auto;
+  }
 }
 
 @media screen and (min-width: 778px) {
   .account-grid {
     grid-template-columns: 1fr 1fr 1fr;
+    .active{
+      grid-column: span 3;
+    }
   }
 }
