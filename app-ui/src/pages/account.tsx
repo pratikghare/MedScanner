@@ -12,15 +12,15 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
 
     return (
         <div className={"min-w-[163px] " + (props.className ? props.className : "")}>
-            <Card className="w-full flex flex-col">
+            <Card className="w-full flex flex-col" classNames={{ footer: "p-0" }}>
                 <CardHeader className="flex gap-3 flex-1">
                     {props.header}
                 </CardHeader>
                 <Divider />
-                <CardFooter onClick={updateSelected} className={"cursor-pointer hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
+                <CardFooter className={"hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
                     {
                         props.footer ? props.footer :
-                        <button className="w-full h-full flex justify-between text-xs">
+                        <button className="w-full h-full flex justify-between text-xs p-3" onClick={updateSelected}>
                             <span>{props.footerText}</span>
                             { props.selected === props.keyId ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
                         </button>
@@ -85,7 +85,7 @@ export default function Account() {
                     footer={
                         <Dropdown backdrop="blur">
                             <DropdownTrigger>
-                                <button className="w-full h-full flex justify-between text-xs">
+                                <button className="p-3 w-full h-full flex justify-between text-xs">
                                     <span>Appearance</span>
                                     <ChevronRight className="size-4" />
                                 </button>
