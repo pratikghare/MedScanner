@@ -101,7 +101,7 @@ export default function Header() {
     }
 
     return (
-        <Navbar classNames={{ wrapper: "" }}>
+        <Navbar classNames={{ wrapper: "px-2 sm:px-6" }}>
             <NavbarContent className="">
                 <NavbarBrand onClick={() => navigate("/")} className="cursor-pointer">
                     <AppLogo />
@@ -197,7 +197,7 @@ export default function Header() {
                                 </p>
                                 <div className="mt-2 flex flex-col gap-2 w-full">
                                     <NumberInput aria-labelledby="location popover input"
-                                        autoFocus size="sm" variant="bordered" hideStepper
+                                        autoFocus={isOpen} size="sm" variant="bordered" hideStepper
                                         onKeyUp={onInputChange}
                                         placeholder="Postcode"
                                         classNames={{ inputWrapper: loader ? "" : "pr-0" }}

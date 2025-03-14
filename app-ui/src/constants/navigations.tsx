@@ -47,7 +47,6 @@ export const navigationTitleMap: any = {
     account: (
         <div className="flex items-center space-x-2">
             <Avatar
-                radius="sm"
                 className="transition-transform h-8 w-8 sm:h-6 sm:w-6"
                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
