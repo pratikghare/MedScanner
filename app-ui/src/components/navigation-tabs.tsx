@@ -1,26 +1,14 @@
 import { Tabs, Tab } from "@heroui/react";
-import { navigationTabs, navigationTitleMap } from "../constants/navigations";
+import { navigationTabs } from "../constants/navigations";
 import { NavigationTab } from "../models";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../store/store";
-import { currentTab } from "../store/reducers/current-tab";
 
-
-export default function NavigationTabs(props: { theme?: string }) {
-    const selected = useSelector((state: RootState) => state.currentTab);
-    const dispatch = useDispatch<AppDispatch>();
-
-    const changeTab = (key: any) => {
-        const tab: NavigationTab | undefined = navigationTabs.find((nav: NavigationTab) => nav.key === key);
-        if (tab) dispatch(currentTab(tab))
-    }
-
+export default function NavigationTabs(props: { theme?: string, changeTab: Function, selected: string }) {
     return (
         <div className="fixed bottom-0 pb-2 flex justify-center w-full ">
             <Tabs size="lg" aria-label="Options" color="primary" radius="sm"
-                variant={props.theme === "light" ? "bordered" : "solid"} selectedKey={selected.key}
+                variant={props.theme === "light" ? "bordered" : "solid"} selectedKey={props.selected}
                 className="backdrop-blur-sm rounded-2xl"
-                onSelectionChange={(key) => changeTab(key)}
+                onSelectionChange={(key) => props.changeTab(key)}
             >
                 {
                     navigationTabs.map((tab: NavigationTab) => (
@@ -28,8 +16,8 @@ export default function NavigationTabs(props: { theme?: string }) {
                             className={tab.className + " rounded-sm"}
                             key={tab.key}
                             shouldSelectOnPressUp
-                            onClick={() => changeTab(tab)}
-                            title={navigationTitleMap[tab.key]}
+                            onClick={() => props.changeTab(tab)}
+                            title={tab.title}
                         />
                     ))
                 }

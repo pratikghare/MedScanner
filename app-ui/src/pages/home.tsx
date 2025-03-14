@@ -37,7 +37,7 @@ function Landing({ inputValue, activeSearchFocus, setInputValue, setSearchActive
                 </div>
 
                 <div className="flex-1 w-full h-full">
-                    <div className="absolute left-auto right-0 md:right-auto md:left-[50%] lg:left-[55%] flex justify-end md:justify-start w-full h-full transition-ease">
+                    <div className="absolute left-auto right-0 md:right-auto md:left-[50%] lg:left-[55%] flex justify-end md:justify-start transition-ease">
                         <div className="mr-3 h-[200px] w-[200px] bg-hero-1 transition-ease"></div>
                         <div className="hidden sm:flex h-[200px] w-[200px] bg-hero-2 mt-1 transition-ease"></div>
                     </div>
