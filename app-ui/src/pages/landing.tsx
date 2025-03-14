@@ -21,8 +21,20 @@ export default function Landing() {
     };
 
     useEffect(() => {
-        if((isLoggedIn || selected !== "account")) setKey(selected);
-    }, [selected]);
+        const sessionTab: string | null = sessionStorage.getItem("key");
+        if(sessionTab) {
+            setKey(sessionTab);
+            setSelected(sessionTab);
+        }
+    }, [])
+
+    const updateSelected = (selected: string) => {
+        setSelected(selected);
+        if((isLoggedIn || selected !== "account")) {
+            setKey(selected);
+            sessionStorage.setItem("key", selected);
+        }
+    }
 
     const onClose = () => {
         if(!isLoggedIn && selected === "account") setSelected(key);
@@ -31,7 +43,7 @@ export default function Landing() {
     return (
         <>
             {navigationPages[key]}
-            <NavigationTabs selected={selected} changeTab={setSelected} theme={theme} />
+            <NavigationTabs selected={selected} changeTab={updateSelected} theme={theme} />
             <Login onClose={onClose} isOpen={!isLoggedIn && selected === "account"} />
         </>
     );

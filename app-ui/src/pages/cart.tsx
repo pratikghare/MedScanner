@@ -4,7 +4,7 @@ export function Cart() {
     return (
         <section className="grid mt-5 mx-0 cursor-default">
             <div className="mb-4 flex justify-between items-center mx-[5%] sm:mx-[5%] lg:mx-[20%]">
-                <div className="md:flex-1 z-50">
+                <div className="flex-1 z-50">
                         {
                             true ? 
                             <>
