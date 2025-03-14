@@ -17,6 +17,7 @@
     "cryptr": "^6.3.0",
     "framer-motion": "^12.4.10",
     "graphql": "^16.10.0",
+    "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",

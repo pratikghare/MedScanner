@@ -31,7 +31,7 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
     );
 }
 
-export default function Account() {
+export default function Account(props: { callback: Function }) {
     const { theme, setTheme } = useTheme();
     const [selected, setSelected] = useState<string>("");
 
@@ -40,8 +40,9 @@ export default function Account() {
     }
 
     useEffect(() => {
-        console.log("SELECTED: ", selected)
-    }, [selected])
+        console.log("SELECTED: ", theme)
+        props.callback(theme);
+    }, [theme])
 
     return (
         <section className="grid mt-5 mx-[5%] sm:mx-[5%] lg:mx-[20%] cursor-default">

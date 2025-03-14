@@ -124,7 +124,7 @@ export default function Home() {
     const [searchActive, setSearchActive] = useState<boolean>(false);
     const [activeSearchFocus, setActiveSearchFocus] = useState<boolean>(false);
     const debounceRef = useRef<NodeJS.Timeout | null>(null);
-
+    
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
 

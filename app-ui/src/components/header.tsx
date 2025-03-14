@@ -42,16 +42,20 @@ export const AppLogo = () => {
 };
 
 const LocationDetails = (props: { currentLocation?: AddressLocation }) => {
+    // const text = props.currentLocation ?
+    //     (props.currentLocation.city ? props.currentLocation.city : (props.currentLocation.county ? props.currentLocation.county :
+    //         props.currentLocation.state ? props.currentLocation.state : props.currentLocation.country
+    //     )) + ` (${props.currentLocation.postCode})` : "Enable permissions";
     const text = props.currentLocation ?
-        (props.currentLocation.city ? props.currentLocation.city : (props.currentLocation.county ? props.currentLocation.county :
+        (props.currentLocation.county ? props.currentLocation.county : (props.currentLocation.city ? props.currentLocation.city :
             props.currentLocation.state ? props.currentLocation.state : props.currentLocation.country
-        )) + ` (${props.currentLocation.postCode})` : "Enable permissions";
+        )) : "Other";
     return (
         <div className="flex flex-col items-end">
-            <span className="font-bold text-sm">{"Other"}</span>
+            <span className="font-bold text-sm">{text}</span>
             <span className="text-xs flex">
                 <LocationIcon className="size-4 mr-1" />
-                {text}
+                {props.currentLocation?.postCode ? props.currentLocation.postCode : "Enable Permissions"}
             </span>
         </div>
 
@@ -200,7 +204,7 @@ export default function Header() {
                                         autoFocus={isOpen} size="sm" variant="bordered" hideStepper
                                         onKeyUp={onInputChange}
                                         placeholder="Postcode"
-                                        classNames={{ inputWrapper: loader ? "" : "pr-0" }}
+                                        classNames={{ inputWrapper: loader ? "" : "pr-0", input: "text-xs" }}
                                         // endContent={<Spinner className={loader ? "visible" : "invisible"} size="sm" color="primary" />}
                                         endContent={
                                             loader ? <Spinner size="sm" color="primary" /> :

@@ -15,7 +15,7 @@ export function Cart() {
                                         <b>{ "2093" }</b>
                                     </span>
                                 </h2>
-                                <Button radius="sm" className="w-full">Proceed to buy</Button>
+                                <Button radius="sm" color="primary" className="w-full">Proceed to buy</Button>
                             </> 
                             : <></>
                         }

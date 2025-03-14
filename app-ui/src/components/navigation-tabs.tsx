@@ -4,12 +4,10 @@ import { NavigationTab } from "../models";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { currentTab } from "../store/reducers/current-tab";
-import { useTheme } from "@heroui/use-theme";
 
 
-export default function NavigationTabs() {
+export default function NavigationTabs(props: { theme?: string }) {
     const selected = useSelector((state: RootState) => state.currentTab);
-    const { theme } = useTheme();
     const dispatch = useDispatch<AppDispatch>();
 
     const changeTab = (key: any) => {
@@ -20,7 +18,7 @@ export default function NavigationTabs() {
     return (
         <div className="fixed bottom-0 pb-2 flex justify-center w-full ">
             <Tabs size="lg" aria-label="Options" color="primary" radius="sm"
-                variant={theme === "light" ? "bordered" : "solid"} selectedKey={selected.key}
+                variant={props.theme === "light" ? "bordered" : "solid"} selectedKey={selected.key}
                 className="backdrop-blur-sm rounded-2xl"
                 onSelectionChange={(key) => changeTab(key)}
             >
