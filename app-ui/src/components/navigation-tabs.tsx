@@ -19,7 +19,7 @@ export default function NavigationTabs() {
 
     return (
         <div className="fixed bottom-0 pb-2 flex justify-center w-full ">
-            <Tabs size="lg" aria-label="Options" color="primary"
+            <Tabs size="lg" aria-label="Options" color="primary" radius="sm"
                 variant={theme === "light" ? "bordered" : "solid"} selectedKey={selected.key}
                 className="backdrop-blur-sm rounded-2xl"
                 onSelectionChange={(key) => changeTab(key)}
@@ -27,7 +27,7 @@ export default function NavigationTabs() {
                 {
                     navigationTabs.map((tab: NavigationTab) => (
                         <Tab
-                            className={tab.className}
+                            className={tab.className + " rounded-sm"}
                             key={tab.key}
                             shouldSelectOnPressUp
                             onClick={() => changeTab(tab)}
