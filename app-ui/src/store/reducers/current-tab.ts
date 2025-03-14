@@ -6,13 +6,10 @@ const currentTabSlice = createSlice({
     name: "currentTabSlice",
     initialState: navigationTabs[0],
     reducers: {
-        currentTab: (_, action: PayloadAction<NavigationTab>) => action.payload,
-        updateTheme: (state: any, action: PayloadAction<string>) => {
-            state['theme'] = action.payload;
-        }
+        currentTab: (_, action: PayloadAction<NavigationTab>) => action.payload
     },
 });
 
 
-export const { currentTab, updateTheme } = currentTabSlice.actions;
+export const { currentTab } = currentTabSlice.actions;
 export default currentTabSlice.reducer;

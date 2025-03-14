@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Navbar,
     NavbarBrand,
@@ -19,11 +19,14 @@ import {
     Spinner,
 } from "@heroui/react";
 import { APP_NAME } from "../constants/locale";
-import { ThemeSwitch } from "./theme-switch";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { LocationIcon } from "./icons";
 import { getGeoLocationDetails, getLocationByPostCode } from "../services/location-service";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { setCurrentLocation } from "../store/reducers/current-location";
+import { AddressLocation } from "../models/location";
 
 export const AppLogo = () => {
     return (
@@ -38,40 +41,49 @@ export const AppLogo = () => {
     );
 };
 
-const CurrentLocation = (props: { text?: string }) => {
+const LocationDetails = (props: { currentLocation?: AddressLocation }) => {
+    const text = props.currentLocation ?
+        (props.currentLocation.city ? props.currentLocation.city : (props.currentLocation.county ? props.currentLocation.county :
+            props.currentLocation.state ? props.currentLocation.state : props.currentLocation.country
+        )) + ` (${props.currentLocation.postCode})` : "Enable permissions";
     return (
-        <span className="flex items-center">
-            <LocationIcon className="size-4 mr-1" /> {props.text ? props.text : "Enable Permissions"}
-        </span>
+        <div className="flex flex-col items-end">
+            <span className="font-bold text-sm">{"Other"}</span>
+            <span className="text-xs flex">
+                <LocationIcon className="size-4 mr-1" />
+                {text}
+            </span>
+        </div>
+
     );
 }
 
 export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
-    const [profileSub, setProfileSub] = useState<ReactNode>();
-    const geoLocation = useGeoLocation();
-    const navigate = useNavigate();
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
 
+    const navigate = useNavigate();
+    const geoLocation = useGeoLocation();
+    const currentLocation = useSelector((state: RootState) => state.currentLocation);
+    const dispatch = useDispatch<AppDispatch>();
+
     useEffect(() => {
         const { position, error } = geoLocation;
-        console.log("postion", position)
-        if (position && !error) {
-            getGeoLocationDetails(String(position.latitude), String(position.longitude)).then(data => {
-                setProfileSub(<CurrentLocation text={`${data.city} (${data.postCode})`} />)
-            })
-        }
-        else setProfileSub(<CurrentLocation />);
+        if (position && !error && !currentLocation)
+            getGeoLocationDetails(String(position.latitude), String(position.longitude))
+                .then((data: AddressLocation) => dispatch(setCurrentLocation(data)))
     }, [geoLocation.position, geoLocation.error])
-    
+
+
     const onInputChange = (event: any) => {
         const term: string = event.target.value ? String(event.target.value).split(",").join("") : "";
-        if(event.key === "Enter") {
+        if (event.key === "Enter") {
             setLoader(true);
-            if(term.length > 2) {
-                getLocationByPostCode(term).then((data: any) => {
-                    setProfileSub(<CurrentLocation text={`${data.city ? data.city : data.county ? data.county : data.state} (${data.postCode})`} />)
+
+            if (term.length > 2) {
+                getLocationByPostCode(term).then((data: AddressLocation) => {
+                    dispatch(setCurrentLocation(data));
                 }).finally(() => {
                     setIsOpen(false);
                     setLoader(false);
@@ -111,7 +123,7 @@ export default function Header() {
                                             src: "https://i.pravatar.cc/150?u=a042581f4e29026024d",
                                         }}
                                         className="transition-transform"
-                                        description={profileSub}
+                                        description=""
                                         name={<span className="ml-[3px]">Good Morning Pratik!</span>}
                                     />
                                 </DropdownTrigger>
@@ -148,9 +160,9 @@ export default function Header() {
                         </>
                 }
 
-                <NavbarItem className="">
+                {/* <NavbarItem className="">
                     <ThemeSwitch />
-                </NavbarItem>
+                </NavbarItem> */}
 
             </NavbarContent>
 
@@ -175,12 +187,7 @@ export default function Header() {
                     >
                         <PopoverTrigger>
                             <Button className="capitalize flex" color="default" variant="light">
-                                <div className="flex flex-col items-end">
-                                    <span className="font-bold text-sm">{"Other"}</span>
-                                    <span className="text-xs flex">
-                                        <span>{profileSub}</span>
-                                    </span>
-                                </div>
+                                <LocationDetails currentLocation={currentLocation} />
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent>
@@ -189,15 +196,15 @@ export default function Header() {
                                     Enter location manually
                                 </p>
                                 <div className="mt-2 flex flex-col gap-2 w-full">
-                                    <NumberInput aria-labelledby="location popover input" 
-                                        autoFocus size="sm" variant="bordered" hideStepper 
-                                        onKeyUp={onInputChange} 
+                                    <NumberInput aria-labelledby="location popover input"
+                                        autoFocus size="sm" variant="bordered" hideStepper
+                                        onKeyUp={onInputChange}
                                         placeholder="Postcode"
                                         classNames={{ inputWrapper: loader ? "" : "pr-0" }}
                                         // endContent={<Spinner className={loader ? "visible" : "invisible"} size="sm" color="primary" />}
                                         endContent={
-                                            loader ? <Spinner size="sm" color="primary" /> : 
-                                            <Button variant="light" className="text-red-500" isIconOnly><LocationIcon /></Button>
+                                            loader ? <Spinner size="sm" color="primary" /> :
+                                                <Button disabled variant="light" className="text-red-500" isIconOnly><LocationIcon /></Button>
                                         }
                                     />
                                 </div>
@@ -206,9 +213,9 @@ export default function Header() {
                     </Popover>
                 </NavbarItem>
 
-                <NavbarItem className="">
+                {/* <NavbarItem className="">
                     <ThemeSwitch />
-                </NavbarItem>
+                </NavbarItem> */}
             </NavbarContent>
         </Navbar>
     );

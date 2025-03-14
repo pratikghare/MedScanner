@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AddressLocation } from "../../models/location";
+
+const initialState: AddressLocation | any = null;
 
 const currentLocationSlice = createSlice({
-    name: "currentTabSlice",
-    initialState: {},
+    name: "currentLocation",
+    initialState,
     reducers: {
-        currentLocation: (_, action: PayloadAction) => action.payload,
+        setCurrentLocation: (_state, action: PayloadAction<AddressLocation>) => action.payload,
     },
 });
 
-
-export const { currentLocation } = currentLocationSlice.actions;
+export const { setCurrentLocation } = currentLocationSlice.actions;
 export default currentLocationSlice.reducer;

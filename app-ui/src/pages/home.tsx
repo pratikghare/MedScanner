@@ -1,15 +1,12 @@
 import { Button, Input, Skeleton, Spinner } from "@heroui/react";
 import { ExternalIcon, SearchIcon, XMarkIcon } from "../components/icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
 import { useEffect, useRef, useState } from "react";
 import { pharmacyImages } from "../constants/locale";
-import { NavigationTab } from "../models";
 import { getMedicinesByName } from "../services/medicine-query-service";
 import { Medicine } from "../models/products";
+import { useTheme } from "@heroui/use-theme";
 
 interface LandingProps {
-    selected: NavigationTab;
     inputValue: string;
     setInputValue: Function;
     activeSearchFocus: boolean;
@@ -17,16 +14,17 @@ interface LandingProps {
     loader: boolean;
 }
 
-function Landing({ selected, inputValue, activeSearchFocus, setInputValue, setSearchActive, loader }: LandingProps) {
+function Landing({ inputValue, activeSearchFocus, setInputValue, setSearchActive, loader }: LandingProps) {
+    const { theme } = useTheme();
     return (
         <>
             <div className="mb-4 flex justify-between items-center mx-[5%] sm:mx-[5%] lg:mx-[20%]">
                 <div className="md:flex-2 z-50">
-                    <h1 className={"transition-ease text-2xl sm:text-3xl md:text-4xl font-bold " + (selected.theme === "light" ? "" : " bg-gray-950 bg-opacity-0")}>Save Money on<br /> <span className="text-blue-500">Medicines</span></h1>
+                    <h1 className={"transition-ease text-2xl sm:text-3xl md:text-4xl font-bold " + (theme === "light" ? "" : " bg-gray-950 bg-opacity-0")}>Save Money on<br /> <span className="text-blue-500">Medicines</span></h1>
                     <sub className="z-50">Helping <b>India</b> compare medicine prices</sub>
 
                     <Input type="text" placeholder="Search" radius="sm" size="md"
-                        variant={selected.theme === "light" ? "bordered" : "flat"}
+                        variant={theme === "light" ? "bordered" : "flat"}
                         value={inputValue} className="mt-3 backdrop-blur-sm backdrop-opacity-70 rounded-lg transition-ease opacity-70"
                         onChange={(event) => setInputValue(event.target.value)}
                         autoFocus={activeSearchFocus}
@@ -35,7 +33,7 @@ function Landing({ selected, inputValue, activeSearchFocus, setInputValue, setSe
                         endContent={inputValue.length ? (loader ? <Spinner size="sm" color="primary" /> : <button onClick={() => setInputValue("")}><XMarkIcon className="size-4" /></button>) : ""}
                     />
 
-                    <PharmacyLogos theme={selected.theme} />
+                    <PharmacyLogos theme={theme} />
                 </div>
 
                 <div className="flex-1 w-full h-full">
@@ -118,7 +116,7 @@ function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
 }
 
 export default function Home() {
-    const selected = useSelector((state: RootState) => state.currentTab);
+    const { theme } = useTheme();
     const [value, setValue] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
     const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -151,12 +149,12 @@ export default function Home() {
         <section className="grid mt-5 mx-0">
             {
                 !searchActive || !value.length ?
-                    <Landing selected={selected} inputValue={value} setInputValue={setValue} activeSearchFocus={activeSearchFocus} setSearchActive={setSearchActive} loader={loader} />
+                    <Landing inputValue={value} setInputValue={setValue} activeSearchFocus={activeSearchFocus} setSearchActive={setSearchActive} loader={loader} />
                     :
                     <div className="mx-[5%] sm:mx-[5%] lg:mx-[20%]">
                         <div className="flex-1 flex items-end gap-2">
                             <Input type="text" placeholder="Search" radius="sm" size="md"
-                                variant={selected.theme === "light" ? "bordered" : "flat"}
+                                variant={theme === "light" ? "bordered" : "flat"}
                                 value={value} className="mt-3 backdrop-blur-sm rounded-lg transition-ease"
                                 onChange={(event) => setValue(event.target.value)}
                                 onFocus={() => {
@@ -167,7 +165,7 @@ export default function Home() {
                                 startContent={<SearchIcon className="mr-2" />}
                                 endContent={value.length ? (loader ? <Spinner size="sm" color="primary" /> : <></>) : ""}
                             />
-                            <Button isIconOnly aria-label="Close" color={selected.theme === "light" ? "primary" : "default"}
+                            <Button isIconOnly aria-label="Close" color={theme === "light" ? "primary" : "default"}
                                 variant="flat" onPress={() => {
                                     setSearchActive(false);
                                     setActiveSearchFocus(false);
@@ -180,7 +178,7 @@ export default function Home() {
                         {
                             loader &&
                             [1, 2, 3, 4].map((index: number) => (
-                                <div key={"search-result-skeleton-" + index} className={"justify-self-start rounded-lg p-4 w-full flex items-center gap-3 mt-4 " + (selected.theme === "light" ? "border" : "bg-[#27272A]")}>
+                                <div key={"search-result-skeleton-" + index} className={"justify-self-start rounded-lg p-4 w-full flex items-center gap-3 mt-4 " + (theme === "light" ? "border" : "bg-[#27272A]")}>
                                     <div>
                                         <Skeleton className="flex rounded-md w-10 h-12" />
                                     </div>
@@ -192,7 +190,7 @@ export default function Home() {
                             ))
                         }
                         {
-                            !loader && isFetched && <SearchResults theme={selected.theme} classNames={selected.theme === "light" ? "border" : "bg-[#27272A]"} results={results} />
+                            !loader && isFetched && <SearchResults theme={theme} classNames={theme === "light" ? "border" : "bg-[#27272A]"} results={results} />
                         }
                     </div>
             }

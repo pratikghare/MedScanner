@@ -49,3 +49,18 @@
     min-height: 200px;
   }
 }
+
+
+
+// Account 
+.account-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(163px, 1fr));
+  grid-gap: 1em;
+}
+
+@media screen and (min-width: 778px) {
+  .account-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

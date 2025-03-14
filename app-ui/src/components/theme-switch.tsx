@@ -5,9 +5,6 @@ import clsx from "clsx";
 import { useTheme } from "@heroui/use-theme";
 
 import { SunFilledIcon, MoonFilledIcon } from "./icons";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store/store";
-import { updateTheme } from "../store/reducers/current-tab";
 
 export interface ThemeSwitchProps {
   className?: string;
@@ -20,10 +17,8 @@ export const ThemeSwitch: FC<ThemeSwitchProps> = ({
 }) => {
   const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme } = useTheme();
-  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
-    dispatch(updateTheme(theme));
   }, [theme])
 
   const {

@@ -2,6 +2,9 @@ import { Avatar } from "@heroui/react";
 import { CartIcon, HomeIcon, LocationIcon } from "../components/icons";
 import { NavigationTab } from "../models";
 import Home from "../pages/home";
+import Account from "../pages/account";
+import { Cart } from "../pages/cart";
+import { NearBy } from "../pages/near-by";
 
 export const navigationTabs: Array<NavigationTab> = [
     {
@@ -42,10 +45,9 @@ export const navigationTitleMap: any = {
         </div>
     ),
     account: (
-
         <div className="flex items-center space-x-2">
-            
             <Avatar
+                radius="sm"
                 className="transition-transform h-8 w-8 sm:h-6 sm:w-6"
                 src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
             />
@@ -57,28 +59,8 @@ export const navigationTitleMap: any = {
 
 export const navigationPages: any = {
     home: <Home/>,
-    pharmacist: (
-        <div className="flex items-center space-x-2">
-            <LocationIcon className="size-8 sm:size-6" />
-            <span className="hidden sm:block text-xs">Pharmacist</span>
-        </div>
-    ),
-    cart: (
-        <div className="flex items-center space-x-2">
-            <CartIcon className="size-8 sm:size-6" />
-            <span className="hidden sm:block text-xs">Cart</span>
-        </div>
-    ),
-    account: (
-
-        <div className="flex items-center space-x-2">
-            
-            <Avatar
-                className="transition-transform h-8 w-8 sm:h-6 sm:w-6"
-                src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            />
-            <span className="hidden sm:block text-xs">Account</span>
-        </div>
-    ),
+    pharmacist: <NearBy />,
+    cart: <Cart />,
+    account: <Account />,
 };
 
