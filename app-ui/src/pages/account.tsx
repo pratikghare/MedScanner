@@ -17,10 +17,10 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
                     {props.header}
                 </CardHeader>
                 <Divider />
-                <CardFooter className={"hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
+                <CardFooter onClick={updateSelected} className={"cursor-pointer hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
                     {
                         props.footer ? props.footer :
-                        <button className="w-full h-full flex justify-between text-xs" onClick={updateSelected}>
+                        <button className="w-full h-full flex justify-between text-xs">
                             <span>{props.footerText}</span>
                             { props.selected === props.keyId ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
                         </button>
