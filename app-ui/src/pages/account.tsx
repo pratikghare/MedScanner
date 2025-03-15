@@ -2,12 +2,19 @@ import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, Dr
 import { ActivityIcon, CalendarDateRangeIcon, ChatBubbleTextIcon, ChevronDown, ChevronRight, ComputerMonitorIcon, DoubleChatBubbleIcon, MoonFilledIcon, PowerIcon, SunFilledIcon } from "../components/icons";
 import { ReactNode, useEffect, useState } from "react";
 import { useTheme } from "@heroui/use-theme";
-
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
+import { logOut } from "../store/reducers/current-user";
+import { User as UserModel } from "../models/user-model"
+import { NO_IMAGE } from "../constants/locale";
 
 const CardItem = (props: { setSelected: Function, selected?: string, keyId: string, header: ReactNode, footerText: string, theme?: string, className?: string, footer?: ReactNode }) => {
+    const dispatch = useDispatch<AppDispatch>();
+
     const updateSelected = () => {
-        if (props.keyId === "logout") return;
-        props.selected === props.keyId ? props.setSelected("") : props.setSelected(props.keyId);
+        if (props.keyId === "logout") dispatch(logOut());
+
+        else props.selected === props.keyId ? props.setSelected("") : props.setSelected(props.keyId);
     }
 
     return (
@@ -34,13 +41,13 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
 export default function Account(props: { callback: Function }) {
     const { theme, setTheme } = useTheme();
     const [selected, setSelected] = useState<string>("");
+    const loggedInUser: UserModel | null = useSelector((state: RootState) => state.loggedInUser);
 
     const changeTheme = (theme: string) => {
         setTheme(theme);
     }
 
     useEffect(() => {
-        console.log("SELECTED: ", theme)
         props.callback(theme);
     }, [theme])
 
@@ -55,13 +62,15 @@ export default function Account(props: { callback: Function }) {
                         <User
                             avatarProps={{
                                 isBordered: true,
+                                showFallback: true,
                                 radius: "md",
-                                src: "https://scontent.fpnq2-2.fna.fbcdn.net/v/t1.6435-9/151614621_3797628340284868_3282187223827585931_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=_XREEHBRpVMQ7kNvgE_ieXk&_nc_oc=AdjBf8IzLzTRVgYE6zSmql0JCS3mIL_i_wNbe2vv5-bcSGf9BJhI8a6bVE_9wkd1nW4&_nc_zt=23&_nc_ht=scontent.fpnq2-2.fna&_nc_gid=QeJ7sl5PMN6eFsC_QJCx6w&oh=00_AYF_sRIMfEnpLMNHCnHeVa3gKTNWVIMWzMad-uxNG5xIKA&oe=67FBAC4D",
-                                name: "PG"
+                                src: `${NO_IMAGE}`,
+                                name: `${loggedInUser?.initials ? loggedInUser.initials : "-"}`,
+                                alt: `${loggedInUser?.initials}`
                             }}
                             classNames={{ base: "gap-3", name: "ml-[2px]" }}
-                            description="@pratikghare_"
-                            name="Pratik Ghare"
+                            description={`@${loggedInUser?.userId}`}
+                            name={loggedInUser?.name}
                         />
                     }
                     footerText={"Your Profile"} theme={theme}

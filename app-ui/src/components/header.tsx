@@ -26,7 +26,7 @@ import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { setCurrentLocation } from "../store/reducers/current-location";
-import { AddressLocation } from "../models/location";
+import { AddressLocation } from "../models/user-model";
 
 export const AppLogo = () => {
     return (

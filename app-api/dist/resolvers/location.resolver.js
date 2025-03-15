@@ -8,14 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.locationResolver = void 0;
-const env_prod_1 = require("../env/env.prod");
+const env_1 = __importDefault(require("../env/env"));
 const cryptr_1 = require("../cryptr");
 const geofyGeoCodeApi = `https://api.geoapify.com/v1/geocode/reverse?lat={lat}&lon={lon}&apiKey=`;
 const getfyPostCodeApi = `https://api.geoapify.com/v1/geocode/search?text={text}&format=json&apiKey=`;
 const resolveUrl = (url) => {
-    return url + (0, cryptr_1.decrypt)(env_prod_1.geofyApiKeys[0]);
+    return url + (0, cryptr_1.decrypt)(env_1.default.geofyApiKeys[0]);
 };
 const getGeoCodeLocation = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, function* (_, { latitude, longitude }) {
     try {
@@ -33,7 +36,7 @@ const getGeoCodeLocation = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, funct
             country: data.country,
             state: data.state,
             city: data.city,
-            county: data.county,
+            county: data.suburb ? data.suburb : data.county,
             postCode: data.postcode,
             address: data.formatted,
             line1: data.address_line1,
@@ -63,7 +66,7 @@ const getLocationByPostCode = (_1, _a) => __awaiter(void 0, [_1, _a], void 0, fu
             country: data.country,
             state: data.state,
             city: data.city,
-            county: data.county,
+            county: data.suburb ? data.suburb : data.county,
             postCode: data.postcode,
             address: data.formatted,
             line1: data.address_line1,

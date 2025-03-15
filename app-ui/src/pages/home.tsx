@@ -3,8 +3,7 @@ import { ExternalIcon, SearchIcon, XMarkIcon } from "../components/icons";
 import { useEffect, useRef, useState } from "react";
 import { pharmacyImages } from "../constants/locale";
 import { getMedicinesByName } from "../services/medicine-query-service";
-import { Medicine } from "../models/products";
-import { useTheme } from "@heroui/use-theme";
+import { Medicine } from "../models/products-model";
 
 interface LandingProps {
     inputValue: string;
@@ -12,10 +11,10 @@ interface LandingProps {
     activeSearchFocus: boolean;
     setSearchActive: Function;
     loader: boolean;
+    theme?: string;
 }
 
-function Landing({ inputValue, activeSearchFocus, setInputValue, setSearchActive, loader }: LandingProps) {
-    const { theme } = useTheme();
+function Landing({ inputValue, activeSearchFocus, setInputValue, setSearchActive, loader, theme }: LandingProps) {
     return (
         <>
             <div className="mb-4 flex justify-between items-center mx-[5%] sm:mx-[5%] lg:mx-[20%]">
@@ -115,8 +114,7 @@ function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
     );
 }
 
-export default function Home() {
-    const { theme } = useTheme();
+export default function Home({ theme } : { theme?: string }) {
     const [value, setValue] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
     const [isFetched, setIsFetched] = useState<boolean>(false);
@@ -149,7 +147,7 @@ export default function Home() {
         <section className="grid mt-5 mx-0">
             {
                 !searchActive || !value.length ?
-                    <Landing inputValue={value} setInputValue={setValue} activeSearchFocus={activeSearchFocus} setSearchActive={setSearchActive} loader={loader} />
+                    <Landing theme={theme} inputValue={value} setInputValue={setValue} activeSearchFocus={activeSearchFocus} setSearchActive={setSearchActive} loader={loader} />
                     :
                     <div className="mx-[5%] sm:mx-[5%] lg:mx-[20%]">
                         <div className="flex-1 flex items-end gap-2">

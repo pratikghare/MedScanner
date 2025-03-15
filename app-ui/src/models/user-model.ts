@@ -1,3 +1,13 @@
+export interface User {
+    name: string;
+    initials: string;
+    image?: string;
+    emailId: string;
+    userId: string;
+    password: string;
+    phone?: string;
+}
+
 export interface AddressLocation {
     countryCode: string,
     country: string,
@@ -10,4 +20,3 @@ export interface AddressLocation {
     line2?: string,
     line3?: string
 }
-

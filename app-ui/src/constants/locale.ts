@@ -41,3 +41,5 @@ export const pharmacyImages = [
     { name: 'Tata 1mg', image: tata1mgLogo, className: "-mb-2 bg-white bg-opacity-40 rounded-sm" },
     { name: 'Truemeds', image: truemedsLogo },
 ];
+
+export const NO_IMAGE = "https://images.unsplash.com/broken";

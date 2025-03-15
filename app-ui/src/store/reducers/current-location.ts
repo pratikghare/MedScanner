@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AddressLocation } from "../../models/location";
+import { AddressLocation } from "../../models/user-model";
 
 const initialState: AddressLocation | any = null;
 

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 import { useClient } from "./graphql-service";
-import { AddressLocation } from "../models/location";
+import { AddressLocation } from "../models/user-model";
 
 const GET_GEO_LOCATION = gql`
     query GetGeoCodeLocation($latitude: String!, $longitude: String!) {
