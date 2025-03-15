@@ -1,4 +1,4 @@
-import { Input, Checkbox, Link, Button, InputOtp, Spinner } from "@heroui/react";
+import { Input, Checkbox, Link, Spinner } from "@heroui/react";
 import { MailIcon, LockIcon } from "../components/icons";
 import { useEffect, useState } from "react";
 import { isUserPresent } from "../services/user-service";

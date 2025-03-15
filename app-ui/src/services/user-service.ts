@@ -40,5 +40,6 @@ export function isUserPresent(userId: string): Promise<any> {
 }
 
 export function getUser(userId: string, password: string): Promise<any> {
+    GET_USER
     return useClient(GET_USER_LOGIN, { userId, password }).then((data) => data.getUser);
 }

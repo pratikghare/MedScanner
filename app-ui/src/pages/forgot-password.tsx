@@ -6,7 +6,7 @@ import { LoginPages } from "../models/navigations-model";
 export default function ForgotPassword(props: { setSelected: Function }) {
     const [emailId, setEmailId] = useState<string>("");
     const [isEmailValidated, setIsEmailValidated] = useState<boolean>(false);
-    const [isOTPValidated, setIsOTPValidated] = useState<boolean>(false);
+    // const [isOTPValidated, setIsOTPValidated] = useState<boolean>(false);
     const [loader, setLoader] = useState<boolean>(false);
     const [counter, setCounter] = useState<number>(0);
 

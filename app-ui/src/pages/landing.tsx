@@ -12,10 +12,10 @@ import { User } from "../models/user-model";
 import { NavigationKeys } from "../models/navigations-model";
 
 export default function Landing() {
-    const [key, setKey] = useState<NavigationKeys>(NavigationKeys.home);
+    const [key, setKey] = useState<NavigationKeys | string>(NavigationKeys.home);
     const loggedInUser: User | null = useSelector((state: RootState) => state.loggedInUser);
     const { theme, setTheme } = useTheme();
-    const [selected, setSelected] = useState<NavigationKeys>(NavigationKeys.home);
+    const [selected, setSelected] = useState<NavigationKeys | string>(NavigationKeys.home);
     
 
     const navigationPages: any = {
