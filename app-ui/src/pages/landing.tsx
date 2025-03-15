@@ -31,12 +31,13 @@ export default function Landing() {
             setKey(sessionTab);
             setSelected(sessionTab);
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         if(!loggedInUser && key === NavigationKeys.account) {
             setKey(NavigationKeys.home);
             setSelected(NavigationKeys.home);
+            sessionStorage.setItem("key", NavigationKeys.home);
         }
     }, [loggedInUser])
 
