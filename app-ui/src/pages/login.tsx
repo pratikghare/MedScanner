@@ -5,7 +5,7 @@ import { isUserPresent } from "../services/user-service";
 import { ValidationError, ValidationType, LoginPages } from "../models/navigations-model";
 
 
-export default function Login(props: { setSelected: Function, validationLoader: boolean, validate: Function, setData: Function, validationError?: ValidationError, setValidationError: Function }) {
+export default function Login(props: { setSelected: Function, validate: Function, setData: Function, validationError?: ValidationError, setValidationError: Function }) {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [isLocalChecked, setIsLocalChecked] = useState<boolean>(false);
@@ -44,7 +44,6 @@ export default function Login(props: { setSelected: Function, validationLoader: 
 
     useEffect(() => {
         props.validate(email.length === 0 || password.length === 0 || validationError !== undefined);
-        // console.log("{ email, password, isLocalChecked }", { email, password, isLocalChecked })
         props.setData({ email, password, isLocalChecked });
     }, [email, password, validationError, isLocalChecked])
 

@@ -1,4 +1,4 @@
-import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, useDisclosure } from "@heroui/react";
+import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, useDisclosure, Spinner } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { ThemeSwitch } from "../components/theme-switch";
 import { getUser } from "../services/user-service";
@@ -63,7 +63,7 @@ export default function UserLoginDrawer(props: { isOpen: boolean, onClose: Funct
     const loginPages: any = {
         login: {
             title: "Log In",
-            body: <Login setValidationError={setValidationError} setData={setData} validationError={validationError} validate={setIsSubmitDisabled} validationLoader={validationLoader} setSelected={setSelected} />,
+            body: <Login setValidationError={setValidationError} setData={setData} validationError={validationError} validate={setIsSubmitDisabled} setSelected={setSelected} />,
             confirmButtonLabel: "Sign In"
         },
         signup: {
@@ -113,7 +113,10 @@ export default function UserLoginDrawer(props: { isOpen: boolean, onClose: Funct
                             {
                                 !loginPages[selected]?.hideFooter &&
                                 <Button color="primary" disabled={isSubmitDisabled} className={ isSubmitDisabled ? "grayscale" : "" } onPress={() => { onSubmit(onClose) }}>
-                                    {loginPages[selected]?.confirmButtonLabel}
+                                    {
+                                        validationLoader ? <Spinner size="sm" color="default" /> :
+                                        loginPages[selected]?.confirmButtonLabel
+                                    }
                                 </Button>
                             }
                         </DrawerFooter>
