@@ -20,7 +20,7 @@ export default function Landing() {
 
     const navigationPages: any = {
         home: <Home theme={theme} />,
-        pharmacist: <NearBy />,
+        nearby: <NearBy />,
         cart: <Cart />,
         account: <Account callback={setTheme} />,
     };
@@ -42,21 +42,21 @@ export default function Landing() {
 
     const updateSelected = (selected: NavigationKeys) => {
         setSelected(selected);
-        if((loggedInUser || selected !== "account")) {
+        if((loggedInUser || selected !== NavigationKeys.account)) {
             setKey(selected);
             sessionStorage.setItem("key", selected);
         }
     }
 
     const onClose = () => {
-        if(!loggedInUser && selected === "account") setSelected(key);
+        if(!loggedInUser && selected === NavigationKeys.account) setSelected(key);
     }
 
     return (
         <>
             {navigationPages[key]}
             <NavigationTabs selected={selected} changeTab={updateSelected} theme={theme} />
-            <UserLoginDrawer updateTheme={setTheme} onClose={onClose} isOpen={!loggedInUser && selected === "account"} />
+            <UserLoginDrawer updateTheme={setTheme} onClose={onClose} isOpen={!loggedInUser && selected === NavigationKeys.account} />
         </>
     );
 }
