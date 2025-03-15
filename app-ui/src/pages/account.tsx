@@ -64,9 +64,8 @@ export default function Account(props: { callback: Function }) {
                                 isBordered: true,
                                 showFallback: true,
                                 radius: "md",
-                                src: `${NO_IMAGE}`,
-                                name: `${loggedInUser?.initials ? loggedInUser.initials : "-"}`,
-                                alt: `${loggedInUser?.initials}`
+                                src: `${loggedInUser?.image ? loggedInUser.image : NO_IMAGE}`,
+                                name: `${loggedInUser?.initials ? loggedInUser.initials : "-"}`
                             }}
                             classNames={{ base: "gap-3", name: "ml-[2px]" }}
                             description={`@${loggedInUser?.userId}`}
