@@ -70,10 +70,12 @@ export default function Account(props: { callback: Function }) {
                 body: "Are you sure you want to log out?",
                 onConfirm: logout,
                 confirmLabel: "Yes",
+                onClose: () => setModalProps(undefined),
                 classNames: { confirmBtnColor: "danger", cancelBtnColor: undefined }
             });
         }
     }
+    
 
     const logout = (callback: Function) => {
         dispatch(logOut());
@@ -168,7 +170,7 @@ export default function Account(props: { callback: Function }) {
             }
             {
                 modalProps &&
-                <ConfirmModal classNames={modalProps.classNames} header={modalProps.header} body={modalProps.body} onConfirm={modalProps.onConfirm} confirmLabel={modalProps.confirmLabel} />
+                <ConfirmModal onClose={modalProps.onClose} classNames={modalProps.classNames} header={modalProps.header} body={modalProps.body} onConfirm={modalProps.onConfirm} confirmLabel={modalProps.confirmLabel} />
             }
         </section>
     );

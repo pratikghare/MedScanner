@@ -16,4 +16,5 @@ export interface ConfirmModalProps {
     onConfirm: Function;
     confirmLabel: string;
     classNames?: ConfirmModalClassNames;
+    onClose: Function;
 }

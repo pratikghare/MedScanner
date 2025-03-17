@@ -51,7 +51,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
                             </ModalBody>
                             <Divider />
                             <ModalFooter>
-                                <Button color={ props.classNames?.cancelBtnColor ? props.classNames.cancelBtnColor : "default" } variant="light" onPress={onClose}>
+                                <Button color={ props.classNames?.cancelBtnColor ? props.classNames.cancelBtnColor : "default" } variant="light" onPress={() => props.onClose ? props.onClose(onClose) : onClose()}>
                                     Cancel
                                 </Button>
                                 <Button color={ props.classNames?.confirmBtnColor ? props.classNames.confirmBtnColor : "primary" } className="shadow-lg shadow-indigo-500/20" onPress={() => props.onConfirm(onClose)}>
