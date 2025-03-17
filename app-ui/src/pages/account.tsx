@@ -1,4 +1,4 @@
-import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, modal, } from "@heroui/react";
+import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
 import { ActivityIcon, CalendarDateRangeIcon, ChatBubbleTextIcon, ChevronDown, ChevronRight, ComputerMonitorIcon, DoubleChatBubbleIcon, MoonFilledIcon, PowerIcon, SunFilledIcon } from "../components/icons";
 import { ReactNode, useEffect, useState } from "react";
 import { useTheme } from "@heroui/use-theme";
