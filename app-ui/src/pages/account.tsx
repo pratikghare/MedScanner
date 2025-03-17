@@ -1,19 +1,29 @@
-import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, } from "@heroui/react";
+import { Card, CardHeader, Divider, CardFooter, User, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, modal, } from "@heroui/react";
 import { ActivityIcon, CalendarDateRangeIcon, ChatBubbleTextIcon, ChevronDown, ChevronRight, ComputerMonitorIcon, DoubleChatBubbleIcon, MoonFilledIcon, PowerIcon, SunFilledIcon } from "../components/icons";
 import { ReactNode, useEffect, useState } from "react";
 import { useTheme } from "@heroui/use-theme";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
-import { logOut } from "../store/reducers/current-user";
 import { User as UserModel } from "../models/user-model"
 import { NO_IMAGE } from "../constants/locale";
+import ConfirmModal from "../components/confirm-modal";
+import { ConfirmModalProps } from "../models/common";
+import { logOut } from "../store/reducers/current-user";
 
-const CardItem = (props: { setSelected: Function, selected?: string, keyId: string, header: ReactNode, footerText: string, theme?: string, className?: string, footer?: ReactNode }) => {
-    const dispatch = useDispatch<AppDispatch>();
+interface CardItemProps {
+    setSelected: Function;
+    selected?: string;
+    keyId: string;
+    header: ReactNode;
+    footerText: string;
+    theme?: string;
+    className?: string;
+    footer?: ReactNode;
+}
 
+const CardItem = (props: CardItemProps) => {
     const updateSelected = () => {
-        if (props.keyId === "logout") dispatch(logOut());
-
+        if (props.keyId === "logout") props.setSelected(ModalType.logout);
         else props.selected === props.keyId ? props.setSelected("") : props.setSelected(props.keyId);
     }
 
@@ -38,13 +48,36 @@ const CardItem = (props: { setSelected: Function, selected?: string, keyId: stri
     );
 }
 
+enum ModalType {
+    logout
+}
+
 export default function Account(props: { callback: Function }) {
     const { theme, setTheme } = useTheme();
     const [selected, setSelected] = useState<string>("");
     const loggedInUser: UserModel | null = useSelector((state: RootState) => state.loggedInUser);
+    const [modalProps, setModalProps] = useState<ConfirmModalProps>();
+    const dispatch = useDispatch<AppDispatch>();
 
     const changeTheme = (theme: string) => {
         setTheme(theme);
+    }
+
+    const updateModal = (type: ModalType) => {
+        if(type === ModalType.logout) {
+            setModalProps({
+                header: "Logout",
+                body: "Are you sure you want to log out?",
+                onConfirm: logout,
+                confirmLabel: "Yes",
+                classNames: { confirmBtnColor: "danger", cancelBtnColor: undefined }
+            });
+        }
+    }
+
+    const logout = (callback: Function) => {
+        dispatch(logOut());
+        callback();
     }
 
     useEffect(() => {
@@ -123,7 +156,7 @@ export default function Account(props: { callback: Function }) {
                     setSelected={setSelected} keyId={"feedback"} header={<ChatBubbleTextIcon />} footerText={"Feedback"} theme={theme}
                 />
                 <CardItem className={selected === "logout" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected}
-                    setSelected={setSelected} keyId={"logout"} header={<PowerIcon />} footerText={"Logout"} theme={theme}
+                    setSelected={updateModal} keyId={"logout"} header={<PowerIcon />} footerText={"Logout"} theme={theme}
                 />
             </div>
 
@@ -132,6 +165,10 @@ export default function Account(props: { callback: Function }) {
                 <div className="mb-4 flex w-full">
                     SELECTED {selected}
                 </div>
+            }
+            {
+                modalProps &&
+                <ConfirmModal classNames={modalProps.classNames} header={modalProps.header} body={modalProps.body} onConfirm={modalProps.onConfirm} confirmLabel={modalProps.confirmLabel} />
             }
         </section>
     );
