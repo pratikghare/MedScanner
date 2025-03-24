@@ -13,3 +13,7 @@ extend type Query {
     getAllUsers: [User!]!
     isUserPresent(userId: String): Boolean!
 }
+
+extend type Mutation {
+    addUser(name: String!, emailId: String!, password: String!, userId: String!, initials: String!): MutationResponse
+}

@@ -19,6 +19,7 @@ interface CardItemProps {
     theme?: string;
     className?: string;
     footer?: ReactNode;
+    disabled?: boolean;
 }
 
 const CardItem = (props: CardItemProps) => {
@@ -29,7 +30,7 @@ const CardItem = (props: CardItemProps) => {
 
     return (
         <div className={"min-w-[163px] " + (props.className ? props.className : "")}>
-            <Card className="w-full flex flex-col" classNames={{ footer: "p-0" }}>
+            <Card isDisabled={props.disabled} className="w-full flex flex-col" classNames={{ footer: "p-0" }}>
                 <CardHeader className="flex gap-3 flex-1">
                     {props.header}
                 </CardHeader>
@@ -37,7 +38,7 @@ const CardItem = (props: CardItemProps) => {
                 <CardFooter className={"hover:bg-opacity-5 " + (props.theme === "light" ? "hover:bg-black" : "hover:bg-white")}>
                     {
                         props.footer ? props.footer :
-                            <button className="w-full h-full flex justify-between text-xs p-3" onClick={updateSelected}>
+                            <button className="w-full h-full flex justify-between text-xs p-3" disabled={props.disabled} onClick={updateSelected}>
                                 <span>{props.footerText}</span>
                                 {props.selected === props.keyId ? <ChevronDown className="size-4" /> : <ChevronRight className="size-4" />}
                             </button>
@@ -120,7 +121,7 @@ export default function Account(props: { callback: Function }) {
 
             <div className="account-grid transition-ease">
                 <CardItem className={selected === "orders" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"orders"} header={<CalendarDateRangeIcon />} footerText={"Orders"} theme={theme} />
-                <CardItem className={selected === "reviews" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"reviews"} header={<DoubleChatBubbleIcon />} footerText={"Reviews"} theme={theme} />
+                <CardItem disabled className={selected === "reviews" ? "active" : (selected == "" || selected == "profile") ? "grayscale" : "hidden"} selected={selected} setSelected={setSelected} keyId={"reviews"} header={<DoubleChatBubbleIcon />} footerText={"Reviews"} theme={theme} />
                 <CardItem className={selected === "theme" ? "active" : (selected == "" || selected == "profile") ? "" : "hidden"} selected={selected} setSelected={setSelected} keyId={"theme"} header={
                     theme == "system" ? <ComputerMonitorIcon />
                         : theme === "light" ? <SunFilledIcon /> : <MoonFilledIcon />

@@ -1,16 +1,36 @@
 import { Input, Checkbox, Link, Spinner } from "@heroui/react";
 import { MailIcon, LockIcon } from "../components/icons";
-import { useEffect, useState } from "react";
+import { forwardRef, Ref, useEffect, useImperativeHandle, useState } from "react";
 import { isUserPresent } from "../services/user-service";
 import { ValidationError, ValidationType, LoginPages } from "../models/navigations-model";
 
 
-export default function Login(props: { setSelected: Function, validate: Function, setData: Function, validationError?: ValidationError, setValidationError: Function }) {
+interface LoginProps {
+    setSelected: Function;
+    validate: Function;
+    setData: Function;
+    validationError?: ValidationError;
+    setValidationError: Function;
+}
+
+export interface UserLoginRef {
+    login: Function;
+}
+
+function Login(props: LoginProps, ref: Ref<UserLoginRef>) {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [isLocalChecked, setIsLocalChecked] = useState<boolean>(false);
     const [validationError, setValidationError] = useState<ValidationError>();
     const [validationLoaders, setValidationLoaders] = useState<Set<ValidationType>>(new Set());
+
+    useImperativeHandle(ref, () => {
+       return {
+        login: () => {
+            console.log("LOGIN IMERATIVE HANDLER", email, password)
+        }
+       }
+    })
 
 
     const validateFields = (type: ValidationType) => {
@@ -109,3 +129,5 @@ export default function Login(props: { setSelected: Function, validate: Function
         </>
     );
 }
+
+export default forwardRef(Login);

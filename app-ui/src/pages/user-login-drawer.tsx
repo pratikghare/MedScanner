@@ -1,5 +1,5 @@
 import { Drawer, DrawerContent, DrawerHeader, DrawerBody, DrawerFooter, Button, useDisclosure, Spinner } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ThemeSwitch } from "../components/theme-switch";
 import { getUser } from "../services/user-service";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,7 @@ import { User } from "../models/user-model";
 import { currentUser } from "../store/reducers/current-user";
 import { LoginPages, ValidationError, ValidationType } from "../models/navigations-model";
 import ForgotPassword from "./forgot-password";
-import Login from "./login";
+import Login, { UserLoginRef } from "./login";
 import SignUp from "./signup";
 
 interface LoginData {
@@ -26,11 +26,13 @@ export default function UserLoginDrawer(props: { isOpen: boolean, onClose: Funct
     const [isSubmitDisabled, setIsSubmitDisabled] = useState<boolean>(true);
     const [validationError, setValidationError] = useState<ValidationError>();
     const dispatch = useDispatch<AppDispatch>();
+    const loginRef = useRef<UserLoginRef | null>(null);
 
     const onSubmit = (close: Function) => {
         setValidationLoader(true);
         if(!data) return;
         if(selected === LoginPages.login) {
+            loginRef.current?.login();
             getUser(data.email, data.password).then((user: User) => {
                 if(user) {
                     dispatch(currentUser(user));
@@ -63,7 +65,7 @@ export default function UserLoginDrawer(props: { isOpen: boolean, onClose: Funct
     const loginPages: any = {
         login: {
             title: "Log In",
-            body: <Login setValidationError={setValidationError} setData={setData} validationError={validationError} validate={setIsSubmitDisabled} setSelected={setSelected} />,
+            body: <Login ref={loginRef} setValidationError={setValidationError} setData={setData} validationError={validationError} validate={setIsSubmitDisabled} setSelected={setSelected} />,
             confirmButtonLabel: "Sign In"
         },
         signup: {
