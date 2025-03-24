@@ -1,1 +1,0 @@
-export const apiUrl = "http://192.168.0.198:9071/graphql";
