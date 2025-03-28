@@ -3,7 +3,6 @@ import { NavigationTabKeys } from "../constants/locale";
 import { HomeIcon, MapPinIcon } from "@heroicons/react/24/outline";
 
 function NavigationTitle({ keyId }: { keyId: string }) {
-    console.log(keyId)
     const iconsClass = "size-8";
     return (
         <div className="flex items-center space-x-2">

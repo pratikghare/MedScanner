@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { styles } from "../constants/locale";
+import { MapPinIcon } from "@heroicons/react/24/outline";
 
 function LocationPopover() {
     const [loader, setLoader] = useState<boolean>(false);
@@ -42,14 +43,14 @@ function LocationPopover() {
                 <button className="text-xs outline-none">
                     <div className="flex flex-col items-end">
                         <span className="font-bold text-sm">{locationHead}</span>
-                        <span>{locationSub}</span>
+                        <span className="flex items-center gap-1"> <MapPinIcon className="size-4" /> {locationSub}</span>
                     </div>
                 </button>
             </PopoverTrigger>
             <PopoverContent>
                 <p className="self-start text-xs font-bold mb-1">Enter location manually</p>
                 <NumberInput placeholder="Postcode" radius="sm" variant="bordered"
-                    classNames={{ inputWrapper: "p-0 px-2 max-w-[158px]", input: "text-xs" }} hideStepper size="sm"
+                    classNames={{ inputWrapper: "p-0 px-2 max-w-[158px] h-10", input: "text-xs" }} hideStepper size="sm"
                     onKeyUp={onChange} aria-label="post-code"
                     endContent={loader && <Spinner size="sm" />}
                 />

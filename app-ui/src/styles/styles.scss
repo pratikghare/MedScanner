@@ -1,8 +1,28 @@
 .app-container {
-    display: flex;
-    justify-content: center;
+    max-width: 1024px;
+    flex: 1;
 }
 
 .transition-ease{
     transition: all 200ms ease-in-out;
 }
+
+body {
+    cursor: default;
+}
+
+.bg-hero-1 {
+    background: url("../assets/undraw_medicine_hqqg.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 200px;
+  }
+  .bg-hero-2 {
+    background: url("../assets/undraw_medical-care_7m9g.svg");
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    min-height: 200px;
+  }
+  
