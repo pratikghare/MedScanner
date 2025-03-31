@@ -44,6 +44,11 @@ export const Themes = {
 } as const;
 export type Theme = (typeof Themes)[keyof typeof Themes];
 
+export interface ThemeState {
+    theme: Theme;
+    current: Theme;
+}
+
 export const styles = {
     basePadding: " pl-2 pr-3 md:pl-3 md:pr-4 "
 } as const;

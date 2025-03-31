@@ -17,7 +17,8 @@ export const removeUserStorage = (): void => {
 export const setStorageTheme = (theme: Theme) => {
     localStorage.setItem(THEME_KEY, theme);
 }
-export const getStorageTheme = (): Theme | null => {
-    const localTheme = localStorage.getItem(THEME_KEY);
-    return Themes.dark === localTheme ? Themes.dark : Themes.light === localTheme ? Themes.light : Themes.system === localTheme ? Themes.system : null;
-}
+export const getStorageTheme = (): Theme | null => getThemeType(localStorage.getItem(THEME_KEY));
+
+export const getThemeType = (theme: string | null): Theme | null => Themes.dark === theme ? Themes.dark : Themes.light === theme ? Themes.light : Themes.system === theme ? Themes.system : null;
+export const getThemeTypeDefined = (theme: string | null, current: Theme): Theme => Themes.dark === theme ? Themes.dark : Themes.light === theme ? Themes.light : Themes.system === theme ? Themes.system : current;
+

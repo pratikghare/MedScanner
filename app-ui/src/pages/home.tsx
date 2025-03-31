@@ -1,18 +1,38 @@
-import { Input, Skeleton, Spinner } from "@heroui/react";
-import { pharmacyImages } from "../constants/locale";
-import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { Button, Input, Skeleton, Spinner } from "@heroui/react";
+import { pharmacyImages, Theme } from "../constants/locale";
+import { ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { themeSelector } from "../store/selectors";
+import { getMedicinesByName } from "../services/product-service";
+import { Medicine } from "../models/products";
 
 export default function Home() {
     const [inputValue, setInputValue] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
+    const [results, setResults] = useState<Array<Medicine>>([]);
     const theme = useSelector(themeSelector);
-    
+    const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
     useEffect(() => {
-        setLoader(true);
-    }, [inputValue])
+        if (debounceRef.current) clearTimeout(debounceRef.current);
+
+        if (inputValue.length > 2) {
+            setLoader(true);
+
+            debounceRef.current = setTimeout(() => {
+                getMedicinesByName(inputValue).then((data: Array<Medicine>) => {
+                    setResults(data);
+                    setLoader(false);
+                    // setIsFetched(true);
+                });
+            }, 500);
+        }
+        else {
+            setLoader(false);
+            // setIsFetched(false);
+        }
+    }, [inputValue]);
 
     return (
         <div className="mt-5 transition-ease relative">
@@ -29,7 +49,7 @@ export default function Home() {
 
                 <Input type="text" placeholder="Search" radius="sm" size="md"
                     variant={theme.current === "light" ? "bordered" : "flat"} value={inputValue}
-                    classNames={{ inputWrapper: "group-data-[focus=true]:border-default-400"}}
+                    classNames={{ inputWrapper: "group-data-[focus=true]:border-default-400" }}
                     className={`mt-3 text-sm backdrop-blur-sm backdrop-opacity-70 rounded-lg z-50 transition-ease opacity-70 ${inputValue.length ? "" : "max-w-[40em]"}`}
                     onChange={(event) => setInputValue(event.target.value)}
                     startContent={<MagnifyingGlassIcon className="size-4" />}
@@ -49,18 +69,20 @@ export default function Home() {
                 }
                 {
                     inputValue.length > 0 ?
-                    (loader ? <SearchResultsSkeleton /> : <SearchResults />) : <></>
+                        (loader ? <SearchResultsSkeleton /> : <SearchResults results={results} />) : <></>
                 }
             </div>
         </div>
     );
 }
 
-function SearchResultsSkeleton() {
-    const arr = [1, 2, 3, 4];
+function SearchResultsSkeleton({ limit }: { limit?: number}) {
+    const arr = limit ? [1, 2, 3, 4].slice(0, limit) : [1, 2, 3, 4];
+    const theme = useSelector(themeSelector);
+
     return (
         arr.map((index: number) => (
-            <div key={index} className="w-full flex items-center gap-3 p-3 border-2 rounded-lg my-4 border-default-200">
+            <div key={"search-skeleton-" + index} className={"w-full flex items-center gap-3 p-3 rounded-lg my-4 border-default-200 " + (theme.current === "light" ? "border-2" : "border")}>
                 <div>
                     <Skeleton className="flex rounded-md w-12 h-12" />
                 </div>
@@ -77,11 +99,32 @@ function SearchResultsSkeleton() {
     );
 }
 
-function SearchResults() {
+function SearchResults({ results }: { results: Array<Medicine>}) {
+    const theme = useSelector(themeSelector);
     return (
-        <>
-
-        </>
+        <div className="pb-[30px]">
+            {
+                results?.map((item: Medicine, index: number) => (
+                    <div key={item.productId + "-result-" + index} className={"w-full flex items-center gap-5 p-2 pr-4 rounded-lg my-4 border-default-200 " + (theme.current === "light" ? "border-2" : "border")}>
+                        <div className="w-[80px] flex justify-center">
+                            <img className="h-[80px]" src={item.images[0]} alt={item.name} />
+                        </div>
+                        <div className="w-full flex flex-col gap-1 text-sm">
+                            <span>{item.name}</span>
+                            <span className="text-xs text-gray-500">{item.manufacturer}</span>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <Button size="sm" color="primary"
+                                variant={theme.current === "light" ? "flat" : "solid"}
+                                endContent={<ArrowTopRightOnSquareIcon className="size-4 outline-none" />}
+                            >
+                                Compare
+                            </Button>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
     );
 }
 

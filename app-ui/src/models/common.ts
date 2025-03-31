@@ -5,7 +5,7 @@ export interface ConfirmModalButtonProps {
     color?: "default" | "primary" | "secondary" | "success" | "warning" | "danger";
     label?: string;
     hide?: boolean;
-    callback?: any;    // Callback should take onClose as parameter
+    callback?: Function;    // Callback should take onClose as parameter
 }
 
 export interface ConfirmModalProps {

@@ -1,13 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Theme, Themes } from "../../constants/locale";
-
-interface ThemeState {
-    theme: Theme;
-    current: Theme;
-}
+import { Theme, Themes, ThemeState } from "../../constants/locale";
 
 const initialState: ThemeState = {
-    theme: Themes.system,
+    theme: Themes.light,
     current: Themes.light
 };
 
@@ -24,9 +19,10 @@ const themeSlice = createSlice({
                 state.current = window.matchMedia("(prefers-color-scheme: dark)").matches ? Themes.dark : Themes.light;
             }
             return state;
-        }
+        },
+        setCurrentTheme: (state :ThemeState, action: PayloadAction<Theme>) => ({...state, current: action.payload})
     },
 });
 
-export const { setTheme } = themeSlice.actions;
+export const { setTheme, setCurrentTheme } = themeSlice.actions;
 export default themeSlice.reducer;

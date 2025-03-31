@@ -52,7 +52,7 @@ export default function ConfirmModal(props: ConfirmModalProps) {
                             }
                             {!props.hideDivider && <Divider />}
                             <ModalBody>
-                                <div className="my-3">
+                                <div className="min-h-[80px] flex w-full items-center">
                                     {(typeof props.body === "string") ? <p>{props.body}</p> : props.body}
                                 </div>
                             </ModalBody>

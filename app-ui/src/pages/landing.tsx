@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import NavigationTabs from "../components/navigation-tabs";
 import LoginDrawer from "../components/login-drawer";
 import { NavigationTabKeys } from "../constants/locale";
@@ -11,7 +11,7 @@ import Account from "./account";
 export default function Landing() {
     type NavigationKeyType = (typeof NavigationTabKeys)[keyof typeof NavigationTabKeys];
 
-    const tabs = {
+    const tabs: Record<string, ReactNode> = {
         home: <Home /> ,
         nearBy: "nearBy",
         account: <Account/>
@@ -40,7 +40,12 @@ export default function Landing() {
 
     return (
         <div className="w-full">
-            { tabs[selected] }
+            {/* { tabs[selected] } */}
+            {
+                Object.keys(tabs).map((key: string, index: number) => (
+                    <div key={key + "-" + index} className={key === selected ? "" : "hidden"}>{ tabs[key] }</div>
+                ))
+            }
             <NavigationTabs selected={selectedKey} setSelected={updateSelected} />
             {
                 !loggedInUser.isLoggedIn && selectedKey === NavigationTabKeys.account && <LoginDrawer onDrawerClose={updateAll} />
