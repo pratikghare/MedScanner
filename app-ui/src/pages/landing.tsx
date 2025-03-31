@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useState } from "react";
 import NavigationTabs from "../components/navigation-tabs";
 import LoginDrawer from "../components/login-drawer";
 import { NavigationTabKeys } from "../constants/locale";

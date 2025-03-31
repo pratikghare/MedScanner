@@ -1,6 +1,6 @@
 import { Button, Input, Skeleton, Spinner } from "@heroui/react";
-import { pharmacyImages, Theme } from "../constants/locale";
-import { ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, ShareIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { pharmacyImages } from "../constants/locale";
+import { ArrowTopRightOnSquareIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { themeSelector } from "../store/selectors";

@@ -30,9 +30,9 @@ export const registerUser = (name: string, initials: string, emailId: string, us
     return mutate(REGISTER_USER, { name, userId, emailId, initials, password }).then((data: any) => data.addUser);
 }
 
-export const updateUser = (name: string, initials: string, email: string, userId: string, password: string, phone?: string): Promise<any> => {
-    return dummyPromise().then(() => true);
-}
+// export const updateUser = (name: string, initials: string, email: string, userId: string, password: string, phone?: string): Promise<any> => {
+//     return dummyPromise().then(() => true);
+// }
 
 export const startServer = (): Promise<boolean> => {
     return query(START_SERVER).then(() => true);

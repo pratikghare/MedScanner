@@ -22,7 +22,7 @@ function LocationPopover() {
 
     useEffect(() => {
         if(position && !errorCode) {
-            console.log("CALL API");
+            setLocationHead("");
         }
     }, [position, errorCode])
 

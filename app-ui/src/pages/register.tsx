@@ -1,4 +1,4 @@
-import { Input, Link, Spinner, user } from "@heroui/react";
+import { Input, Link, Spinner } from "@heroui/react";
 import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { MailIcon, LockIcon } from "../components/icons";
 import { LoginType } from "../constants/locale";
