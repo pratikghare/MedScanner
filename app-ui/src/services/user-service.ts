@@ -41,9 +41,9 @@ export const startServer = (): Promise<boolean> => {
 }
 
 function dummyPromise(): Promise<any> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         setTimeout(() => {
           resolve("Promise resolved successfully!");
-        }, 10000);
+        }, 5000);
     });
 }
