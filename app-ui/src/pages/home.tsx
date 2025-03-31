@@ -2,14 +2,16 @@ import { Input, Skeleton, Spinner } from "@heroui/react";
 import { pharmacyImages } from "../constants/locale";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { themeSelector } from "../store/selectors";
 
 export default function Home() {
     const [inputValue, setInputValue] = useState<string>("");
     const [loader, setLoader] = useState<boolean>(false);
-    const theme = "light";
+    const theme = useSelector(themeSelector);
+    
     useEffect(() => {
         setLoader(true);
-
     }, [inputValue])
 
     return (
@@ -26,7 +28,8 @@ export default function Home() {
                 }
 
                 <Input type="text" placeholder="Search" radius="sm" size="md"
-                    variant={theme === "light" ? "bordered" : "flat"} value={inputValue}
+                    variant={theme.current === "light" ? "bordered" : "flat"} value={inputValue}
+                    classNames={{ inputWrapper: "group-data-[focus=true]:border-default-400"}}
                     className={`mt-3 text-sm backdrop-blur-sm backdrop-opacity-70 rounded-lg z-50 transition-ease opacity-70 ${inputValue.length ? "" : "max-w-[40em]"}`}
                     onChange={(event) => setInputValue(event.target.value)}
                     startContent={<MagnifyingGlassIcon className="size-4" />}
@@ -34,7 +37,7 @@ export default function Home() {
                 />
 
                 {
-                    inputValue.length === 0 ? <PharmacyLogos theme={theme} /> : <></>
+                    inputValue.length === 0 ? <PharmacyLogos theme={theme.current} /> : <></>
                 }
 
                 {
@@ -57,7 +60,7 @@ function SearchResultsSkeleton() {
     const arr = [1, 2, 3, 4];
     return (
         arr.map((index: number) => (
-            <div key={index} className="w-full flex items-center gap-3 p-3 border rounded-lg my-3 border-default-200">
+            <div key={index} className="w-full flex items-center gap-3 p-3 border-2 rounded-lg my-4 border-default-200">
                 <div>
                     <Skeleton className="flex rounded-md w-12 h-12" />
                 </div>
@@ -82,7 +85,7 @@ function SearchResults() {
     );
 }
 
-function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
+function PharmacyLogos(props: { size?: number, theme: string }) {
     const size: number = props.size ? props.size : 45;
     return (
         <div className="z-50 max-w-[560px] backdrop-blur-sm backdrop-opacity-70 md:backdrop-blur-none sm:flex-nowrap flex items-center overflow-hidden w-full p-2 gap-1 text-xs">
@@ -93,7 +96,7 @@ function PharmacyLogos(props: { size?: number, theme: string | undefined }) {
                             src={image.image}
                             alt={image.name}
                             width={size} height={size}
-                            className={(!props.theme || props.theme === "dark" ? "sm:grayscale" : "") + " "}
+                            className={(!props.theme || props.theme === "dark" ? "sm:grayscale" : "") + " " + image?.className}
                             draggable="false"
                             onContextMenu={(e) => e.preventDefault()}
                         />

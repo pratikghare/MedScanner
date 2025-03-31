@@ -3,7 +3,7 @@
     flex: 1;
 }
 
-.transition-ease{
+.transition-ease {
     transition: all 200ms ease-in-out;
 }
 
@@ -17,12 +17,39 @@ body {
     background-position: right;
     background-repeat: no-repeat;
     min-height: 200px;
-  }
-  .bg-hero-2 {
+}
+
+.bg-hero-2 {
     background: url("../assets/undraw_medical-care_7m9g.svg");
     background-size: contain;
     background-position: right;
     background-repeat: no-repeat;
     min-height: 200px;
-  }
-  
+}
+
+$maxCardWith: 140px;
+.max-card-width{
+    min-width: $maxCardWith;
+}
+
+// Account
+.account-grid {
+    padding-bottom: 4em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax($maxCardWith, 1fr));
+    grid-gap: 1em;
+
+    .active {
+        grid-column: 1 / -1;
+    }
+}
+
+@media screen and (min-width: 778px) {
+    .account-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+
+        .active {
+            grid-column: span 3;
+        }
+    }
+}

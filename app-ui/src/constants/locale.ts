@@ -11,17 +11,12 @@ import pusleplusLogo from "../assets/pharmacies/pusleplusLogo.png"
 import tata1mgLogo from "../assets/pharmacies/tata1mgLogo.png"
 import truemedsLogo from "../assets/pharmacies/truemedsLogo.png"
 
-export const styles = {
-    basePadding: " pl-2 pr-3 md:pl-3 md:pr-4 "
-} as const;
-
-export const NavigationTabKeys = {
-    home: "home",
-    nearyBy: "nearBy",
-    account: "account"
-} as const;
-
-export const pharmacyImages = [
+interface ImageProp {
+    name: string;
+    image: string;
+    className?: string;
+}
+export const pharmacyImages: Array<ImageProp> = [
     { name: 'Apollo Pharmacy', image: apolloLogo },
     { name: 'Netmeds', image: netmedsLogo },
     { name: 'Pulse Plus', image: pusleplusLogo },
@@ -35,10 +30,26 @@ export const pharmacyImages = [
     { name: 'Truemeds', image: truemedsLogo },
 ] as const;
 
+
 export enum LoginType {
     LOGIN = "Login", FORGOT = "Forgot Password", REGISTER = "Sign up"
 }
 
-export const APP_STORAGE = {
-    LOGIN_KEY: "user"
-}
+export const NO_IMAGE = "https://images.unsplash.com/broken";
+
+export const Themes = {
+    dark: "dark",
+    light: "light",
+    system: "system"
+} as const;
+export type Theme = (typeof Themes)[keyof typeof Themes];
+
+export const styles = {
+    basePadding: " pl-2 pr-3 md:pl-3 md:pr-4 "
+} as const;
+
+export const NavigationTabKeys = {
+    home: "home",
+    nearBy: "nearBy",
+    account: "account"
+} as const;

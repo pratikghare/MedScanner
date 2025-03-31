@@ -14,10 +14,12 @@ interface User {
 
 export const userResolver = {
     Query: {
-        getUser: (_: any, { userId, password }: { userId: string, password: string } ) => {
-            return users.find((user) => password === user.password && (userId == user.userId || userId == user.emailId))
-        },
-        isUserPresent: (_: any, { userId }: { userId: string } ) => {
+        startServer: () => true,
+        getUser: (_: any, { userId, password }: { userId: string, password: string } ) => 
+            users.find((user) => password === user.password && (userId == user.userId || userId == user.emailId)),
+        loggedInUser: (_:any, { token } : { token: string }) => users.find((user) => token == user.userId || user.emailId),
+        isUserPresent: (_: any, { userId, field }: { userId: string, field?: "userId" | "emailId" } ) => {
+            if(field) return users.find((user) => userId == user[field]) ? true : false;
             return users.find((user) => userId == user.userId || userId == user.emailId) ? true : false;
         },
         getAllUsers: () => users

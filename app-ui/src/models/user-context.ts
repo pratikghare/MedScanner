@@ -4,5 +4,7 @@ export interface User {
     phone: string;
     name: string;
     initials: string;
-    isLoggedIn: boolean;
+    isLoggedIn?: boolean;
+    image?: string;
+    
 }

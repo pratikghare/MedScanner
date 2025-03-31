@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavigationTabs from "../components/navigation-tabs";
 import LoginDrawer from "../components/login-drawer";
 import { NavigationTabKeys } from "../constants/locale";
@@ -6,13 +6,25 @@ import Home from "./home";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../store/selectors";
 import { User } from "../models/user-context";
+import Account from "./account";
 
 export default function Landing() {
     type NavigationKeyType = (typeof NavigationTabKeys)[keyof typeof NavigationTabKeys];
 
+    const tabs = {
+        home: <Home /> ,
+        nearBy: "nearBy",
+        account: <Account/>
+    };
+
     const [selectedKey, setSelectedKey] = useState<NavigationKeyType>(NavigationTabKeys.home);
     const [selected, setSelected] = useState<NavigationKeyType>(NavigationTabKeys.home);
     const loggedInUser: User = useSelector(currentUserSelector);
+
+    // useEffect(() => {
+    //     console.log(loggedInUser)
+    //     // updateAll();
+    // }, [loggedInUser])
 
     const updateSelected = (key: NavigationKeyType, force: boolean = false) => {
         setSelectedKey(key);
@@ -20,17 +32,18 @@ export default function Landing() {
             setSelected(key);
         }
     }
-
-    const updateAllSelected = () => {
-        updateSelected(loggedInUser.isLoggedIn ? selectedKey : selected, true);
+    const updateAll = () => {
+        console.log("isLoggedIn", loggedInUser)
+        const update: NavigationKeyType = selected === NavigationTabKeys.account ? NavigationTabKeys.home : selected;
+        updateSelected(loggedInUser.isLoggedIn ? selectedKey : update, true);
     }
 
     return (
         <div className="w-full">
-            { selected === NavigationTabKeys.home && <Home /> }
+            { tabs[selected] }
             <NavigationTabs selected={selectedKey} setSelected={updateSelected} />
             {
-                !loggedInUser.isLoggedIn && selectedKey === NavigationTabKeys.account && <LoginDrawer setSelected={updateAllSelected} />
+                !loggedInUser.isLoggedIn && selectedKey === NavigationTabKeys.account && <LoginDrawer onDrawerClose={updateAll} />
             }
         </div>
     );

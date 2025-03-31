@@ -1,17 +1,22 @@
 import { Tabs, Tab, Avatar } from "@heroui/react";
-import { NavigationTabKeys } from "../constants/locale";
+import { NavigationTabKeys, NO_IMAGE } from "../constants/locale";
 import { HomeIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
+import { currentUserSelector } from "../store/selectors";
 
 function NavigationTitle({ keyId }: { keyId: string }) {
     const iconsClass = "size-8";
+    const loggedInUser = useSelector(currentUserSelector);
+
     return (
         <div className="flex items-center space-x-2">
             {
                 keyId === NavigationTabKeys.home ? <HomeIcon className={iconsClass} /> :
-                    keyId === NavigationTabKeys.nearyBy ? <MapPinIcon className={iconsClass} /> :
+                    keyId === NavigationTabKeys.nearBy ? <MapPinIcon className={iconsClass} /> :
                         keyId === NavigationTabKeys.account ? <>
-                            <Avatar className={iconsClass} 
-                                src="https://i.pravatar.cc/150?u=a04258114e29026302d" 
+                            <Avatar className={iconsClass}
+                                src={`${loggedInUser?.image ? loggedInUser.image : NO_IMAGE}`}
+                                name={loggedInUser?.initials ? loggedInUser.initials : undefined}
                                 showFallback
                             />
                         </> : <></>
@@ -19,7 +24,7 @@ function NavigationTitle({ keyId }: { keyId: string }) {
             <span className="text-xs hidden sm:block">
                 {
                     keyId === NavigationTabKeys.home ? "Home" :
-                        keyId === NavigationTabKeys.nearyBy ? "Near By" :
+                        keyId === NavigationTabKeys.nearBy ? "Near By" :
                             keyId === NavigationTabKeys.account ? "Account" : ""
                 }
             </span>
@@ -41,8 +46,8 @@ export default function NavigationTabs({ selected, setSelected }: { selected: st
                 <Tab key={NavigationTabKeys.home} shouldSelectOnPressUp
                     title={<NavigationTitle keyId={NavigationTabKeys.home} />}
                 />
-                <Tab key={NavigationTabKeys.nearyBy} shouldSelectOnPressUp
-                    title={<NavigationTitle keyId={NavigationTabKeys.nearyBy} />}
+                <Tab key={NavigationTabKeys.nearBy} shouldSelectOnPressUp
+                    title={<NavigationTitle keyId={NavigationTabKeys.nearBy} />}
                 />
                 <Tab key={NavigationTabKeys.account} shouldSelectOnPressUp
                     title={<NavigationTitle keyId={NavigationTabKeys.account} />}

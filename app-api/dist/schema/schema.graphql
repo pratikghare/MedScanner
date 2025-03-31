@@ -1,0 +1,8 @@
+type Query
+
+type Mutation
+
+type MutationResponse {
+    id: String!
+    response: String!
+}
