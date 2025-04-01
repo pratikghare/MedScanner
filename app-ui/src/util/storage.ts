@@ -27,5 +27,5 @@ export const getThemeTypeDefined = (theme: string | null, current: Theme): Theme
 export const setCurrentTabStorage = (tab: NavigationKeyType) => sessionStorage.setItem(CURRENT_TAB, tab);
 export const getCurrentTabStorage = (): NavigationKeyType => {
     const tab: any = sessionStorage.getItem(CURRENT_TAB);
-    return tab ? tab : NavigationTabKeys.account;
+    return tab ? tab : NavigationTabKeys.home;
 }
