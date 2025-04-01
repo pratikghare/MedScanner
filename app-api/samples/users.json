@@ -1,1 +1,40 @@
-[{"userId":"pratikghare","name":"Pratik Ghare","emailId":"pratikghare888@gmail.com","password":"oneplus3=4","initials":"PG","image":"https://scontent.fpnq2-2.fna.fbcdn.net/v/t1.6435-9/151614621_3797628340284868_3282187223827585931_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=_XREEHBRpVMQ7kNvgE_ieXk&_nc_oc=AdjBf8IzLzTRVgYE6zSmql0JCS3mIL_i_wNbe2vv5-bcSGf9BJhI8a6bVE_9wkd1nW4&_nc_zt=23&_nc_ht=scontent.fpnq2-2.fna&_nc_gid=QeJ7sl5PMN6eFsC_QJCx6w&oh=00_AYF_sRIMfEnpLMNHCnHeVa3gKTNWVIMWzMad-uxNG5xIKA&oe=67FBAC4D"},{"userId":"jugari_boy","name":"Shrikant Ramnali","emailId":"shrikant123@gmail.com","password":"shrikant","initials":"SR","image":"https://scontent.fpnq2-2.fna.fbcdn.net/v/t39.30808-6/383210836_2171548366373343_8906890640798862369_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=YAj3MDlEbR8Q7kNvgH0sc_m&_nc_oc=Adg_v5Jphv14N1r5vbuQUgZAnOboEtCms_C_r1yTAZ7ERNqhfgkXJaKue8Uh4QhT1C0&_nc_zt=23&_nc_ht=scontent.fpnq2-2.fna&_nc_gid=0_arBuN2yANd0i9r362DIA&oh=00_AYH0gU7-pRVixhIPADkIaBgqVLUNNAk1Sq_t6lBCR12OGA&oe=67DB5675"},{"userId":"bhandya","name":"Vaibhav Shelar","emailId":"vicky123@gmail.com","password":"bhubhu","initials":"VS","image":null},{"name":"Priyanka Ghare","emailId":"priyankaghare@gmail.com","password":"tigersamsung","userId":"priyankaghare","initials":"PG"},{"name":"Gayatri Maral","emailId":"maral.gayatri@gmail.com","password":"rainbow","userId":"GAYu","initials":"GM"}]
+[
+    {
+        "userId": "pratikghare",
+        "name": "Pratik Ghare",
+        "emailId": "pratikghare888@gmail.com",
+        "password": "oneplus3=4",
+        "initials": "PG",
+        "image": "https://scontent.fpnq2-2.fna.fbcdn.net/v/t1.6435-9/151614621_3797628340284868_3282187223827585931_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=_XREEHBRpVMQ7kNvgE_ieXk&_nc_oc=AdjBf8IzLzTRVgYE6zSmql0JCS3mIL_i_wNbe2vv5-bcSGf9BJhI8a6bVE_9wkd1nW4&_nc_zt=23&_nc_ht=scontent.fpnq2-2.fna&_nc_gid=QeJ7sl5PMN6eFsC_QJCx6w&oh=00_AYF_sRIMfEnpLMNHCnHeVa3gKTNWVIMWzMad-uxNG5xIKA&oe=67FBAC4D"
+    },
+    {
+        "userId": "jugari_boy",
+        "name": "Shrikant Ramnali",
+        "emailId": "shrikant123@gmail.com",
+        "password": "shrikant",
+        "initials": "SR",
+        "image": "https://scontent.fpnq2-2.fna.fbcdn.net/v/t39.30808-6/383210836_2171548366373343_8906890640798862369_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=ESzV1B6QyKoQ7kNvgFBZcvx&_nc_oc=AdmC6-gNuxe7pGMGBMUCPzt92NwmjabxHzVoA0zuQVYWQGVXnglSJZ2EZFfES4fu6_I&_nc_zt=23&_nc_ht=scontent.fpnq2-2.fna&_nc_gid=Snl0cpz9wTa3vPvvOLpFbQ&oh=00_AYFkJGZwwb29I2wiBX_kAaonTAE0hq7P-bFN-_rovf7-Nw&oe=67F1F835"
+    },
+    {
+        "userId": "bhandya",
+        "name": "Vaibhav Shelar",
+        "emailId": "vicky123@gmail.com",
+        "password": "bhubhu",
+        "initials": "VS",
+        "image": null
+    },
+    {
+        "name": "Priyanka Ghare",
+        "emailId": "priyankaghare@gmail.com",
+        "password": "tigersamsung",
+        "userId": "priyankaghare",
+        "initials": "PG"
+    },
+    {
+        "name": "Gayatri Maral",
+        "emailId": "maral.gayatri@gmail.com",
+        "password": "rainbow",
+        "userId": "GAYu",
+        "initials": "GM"
+    }
+]
