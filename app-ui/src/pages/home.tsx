@@ -50,7 +50,7 @@ export default function Home() {
                 <Input type="text" placeholder="Search" radius="sm" size="md"
                     variant={theme.current === "light" ? "bordered" : "flat"} value={inputValue}
                     classNames={{ inputWrapper: "group-data-[focus=true]:border-default-400" }}
-                    className={`mt-3 text-sm backdrop-blur-sm backdrop-opacity-70 rounded-lg z-50 transition-ease opacity-70 ${inputValue.length ? "" : "max-w-[40em]"}`}
+                    className={`mt-3 text-sm backdrop-blur-sm backdrop-opacity-70 rounded-lg z-10 transition-ease opacity-70 ${inputValue.length ? "" : "max-w-[40em]"}`}
                     onChange={(event) => setInputValue(event.target.value)}
                     startContent={<MagnifyingGlassIcon className="size-4" />}
                     endContent={inputValue.length ? (loader ? <Spinner size="sm" color="primary" /> : <button onClick={() => setInputValue("")}><XMarkIcon className="size-4" /></button>) : ""}
