@@ -56,3 +56,29 @@ export const START_SERVER = gql`
         startServer
     }
 `;
+
+export const GEO_LOCATION = gql`
+    query Query($latitude: String!, $longitude: String!) {
+        getGeoCodeLocation(latitude: $latitude, longitude: $longitude) {
+            state
+            postCode
+            county
+            countryCode
+            city
+            country
+        }
+    }
+`;
+
+export const POST_CODE_LOCATION = gql`
+    query GetLocationByPostCode($postCode: String!) {
+        getLocationByPostCode(postCode: $postCode) {
+            state
+            postCode
+            county
+            countryCode
+            country
+            city
+        }
+    }
+`;

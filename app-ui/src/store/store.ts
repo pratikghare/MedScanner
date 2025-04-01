@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import currentUserSlice from "./reducers/current-user";
 import themeSlice from "./reducers/theme";
 import confirmModal from "./reducers/confirm-modal-slice";
+import currentLocationSlice from "./reducers/current-location";
 
 export const store = configureStore({
     reducer: {
         loggedInUser: currentUserSlice,
         themeSlice: themeSlice,
-        confirmModal: confirmModal
+        confirmModal: confirmModal,
+        currentLocation: currentLocationSlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

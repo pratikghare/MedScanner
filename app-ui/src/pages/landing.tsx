@@ -33,7 +33,6 @@ export default function Landing() {
         }
     }
     const updateAll = () => {
-        console.log("isLoggedIn", loggedInUser)
         const update: NavigationKeyType = selected === NavigationTabKeys.account ? NavigationTabKeys.home : selected;
         updateSelected(loggedInUser.isLoggedIn ? selectedKey : update, true);
     }

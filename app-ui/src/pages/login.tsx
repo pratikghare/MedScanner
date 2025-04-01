@@ -10,6 +10,8 @@ import { User } from "../models/user-context";
 import { checkUserExist, loginUser } from "../services/user-service";
 
 interface LoginProps {
+    isFormValidated: boolean;
+    onClose: Function;
     setSelectedType: Function;
     setIsFormValidated: Function;
     setLoader: Function;
@@ -28,6 +30,12 @@ function Login(props: LoginProps, ref: any) {
     useImperativeHandle(ref, () => ({
         login
     }));
+
+    const onEnter = (event: any) => {
+        if(event.key === "Enter" && props.isFormValidated) {
+            login(props.onClose);
+        }
+    }
 
     const checkUserExistence = () => {
         if(!userId.length) return;
@@ -82,6 +90,7 @@ function Login(props: LoginProps, ref: any) {
                 placeholder="Enter your email or user id"
                 variant="bordered"
                 isInvalid={!userExist && isChecked}
+                onKeyUp={onEnter}
             />
             <div className="flex- flex-col items-center w-full space-y-1">
                 <Input
@@ -94,6 +103,7 @@ function Login(props: LoginProps, ref: any) {
                     placeholder="Enter your password"
                     type="password"
                     variant="bordered"
+                    onKeyUp={onEnter}
                 />
                 <div className={"text-xs text-center text-danger-500 " + ( error ? "" : "invisible" )}>
                     { error ? error : "-" }

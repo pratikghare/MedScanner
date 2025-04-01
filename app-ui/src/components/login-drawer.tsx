@@ -62,7 +62,7 @@ export default function LoginDrawer({ onDrawerClose } : { onDrawerClose: Functio
                         <DrawerHeader className="flex flex-col gap-1">{selectedType}</DrawerHeader>
                         <DrawerBody>
                             {
-                                selectedType === LoginType.LOGIN ? <Login ref={loginRef} setSelectedType={setSelectedType} setIsFormValidated={setIsFormValidated} setLoader={setLoader} /> :
+                                selectedType === LoginType.LOGIN ? <Login ref={loginRef} setSelectedType={setSelectedType} setIsFormValidated={setIsFormValidated} setLoader={setLoader} onClose={onClose} isFormValidated={isFormValidated} /> :
                                     selectedType === LoginType.REGISTER ? <Register ref={registerRef} setSelectedType={setSelectedType} setIsFormValidated={setIsFormValidated} setLoader={setLoader} /> :
                                         selectedType === LoginType.FORGOT ? <ForgotPassword setSelectedType={setSelectedType} /> : <></>
                             }

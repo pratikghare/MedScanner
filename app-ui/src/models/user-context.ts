@@ -8,3 +8,12 @@ export interface User {
     image?: string;
     
 }
+
+export interface UserLocation {
+    state?: string;
+    postCode: string;
+    county?: string;
+    countryCode: string;
+    country: string;
+    city: string;
+}

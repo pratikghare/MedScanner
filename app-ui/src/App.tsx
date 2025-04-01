@@ -29,7 +29,6 @@ export default function App() {
 
     useEffect(() => {
         const userId: string | null = getUserStorage();
-        console.log(userId);
         setTimeout(() => {
             setIsFetching(false);
         }, 1000)
@@ -39,8 +38,7 @@ export default function App() {
                 setIsFetching(false);
                 setLoader(false);
             }) :
-            startServer().then((data) => {
-                console.log(data, "RES");
+            startServer().then(() => {
                 setLoader(false);
                 setIsFetching(false);
             });

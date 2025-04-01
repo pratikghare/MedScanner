@@ -105,24 +105,40 @@ function SearchResults({ results }: { results: Array<Medicine>}) {
         <div className="pb-[30px]">
             {
                 results?.map((item: Medicine, index: number) => (
-                    <div key={item.productId + "-result-" + index} className={"w-full flex items-center gap-5 p-2 pr-4 rounded-lg my-4 border-default-200 " + (theme.current === "light" ? "border-2" : "border")}>
-                        <div className="w-[80px] flex justify-center">
-                            <img className="h-[80px]" src={item.images[0]} alt={item.name} />
+                    <div key={item.productId + "-result-" + index} className={"w-full h-auto flex items-center gap-3 sm:gap-5 p-2 pr-4 rounded-lg my-4 border-default-200 " + (theme.current === "light" ? "border-2" : "border")}>
+                        <div className="w-[80px] max-h-[80px] flex justify-center"
+                            // style={{ background: `url(${item.images[0]})`, backgroundPosition: "center", backgroundSize: "contain", backgroundRepeat: "no-repeat" }}
+                        >
+                            <img className="w-auto h-auto pointer-events-none" src={item.images[0]} alt={item.name} />
                         </div>
-                        <div className="w-full flex flex-col gap-1 text-sm">
-                            <span>{item.name}</span>
-                            <span className="text-xs text-gray-500">{item.manufacturer}</span>
+                        
+                        <div className=" w-full flex flex-col gap-1 text-xs sm:text-sm ">
+                            <span className="hover:underline cursor-pointer">{item.name}</span>
+                            <span className="text-xs text-default-500">{item.manufacturer}</span>
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col sm:gap-2">
                             <Button size="sm" color="primary"
+                                className="p-1 h-auto px-2 sm:h-8 sm:px-3 text-[10px] sm:text-xs gap-1 sm:gap-2"
                                 variant={theme.current === "light" ? "flat" : "solid"}
-                                endContent={<ArrowTopRightOnSquareIcon className="size-4 outline-none" />}
+                                endContent={<ArrowTopRightOnSquareIcon className="size-3 sm:size-4 outline-none" />}
                             >
                                 Compare
                             </Button>
                         </div>
                     </div>
                 ))
+            }
+            {
+                !results.length &&
+                <div className={"w-full flex items-center gap-3 p-3 rounded-lg my-4 border-default-200 " + (theme.current === "light" ? "border-2" : "border")}>
+                <div>
+                </div>
+                <div className="w-full flex flex-col gap-2 text-sm text-gray-500">
+                    No results found.
+                </div>
+                <div className="flex flex-col gap-2">
+                </div>
+            </div>
             }
         </div>
     );

@@ -13,36 +13,56 @@ import { useEffect, useState } from "react";
 import useGeoLocation from "../hooks/useGeoLocation";
 import { styles } from "../constants/locale";
 import { MapPinIcon } from "@heroicons/react/24/outline";
+import { fetchLocationByGeoCode, fetchLocationByPostCode } from "../services/user-service";
+import { UserLocation } from "../models/user-context";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../store/store";
+import { setCurentLocation } from "../store/reducers/current-location";
+import { currentLocationSelector } from "../store/selectors";
 
 function LocationPopover() {
     const [loader, setLoader] = useState<boolean>(false);
-    const { position, errorCode } = useGeoLocation();
     const [locationHead, setLocationHead] = useState<string>("Other");
     const [locationSub, setLocationSub] = useState<string>("Enable Permissions");
+    const [isOpen, setIsOpen] = useState<boolean>();
+
+    const { position, errorCode } = useGeoLocation();
+    
+    const dispatch = useDispatch<AppDispatch>();
+    const currentLocation = useSelector(currentLocationSelector);
 
     useEffect(() => {
         if(position && !errorCode) {
-            setLocationHead("");
+            setLocationHead("Current Location");
+            fetchLocationByGeoCode(position.latitude, position.longitude).then((data: UserLocation) => dispatch(setCurentLocation(data)));
         }
-    }, [position, errorCode])
+    }, [position, errorCode]);
+
+    useEffect(() => {
+        const subtext = currentLocation.city ? currentLocation.city : currentLocation.county ? currentLocation.county : currentLocation.state ? currentLocation.state : currentLocation.countryCode ? currentLocation.countryCode : "";
+        currentLocation.postCode?.length && setLocationSub(subtext + ` (${currentLocation.postCode})`);
+    }, [currentLocation])
 
     const onChange = (event: any) => {
         const term: string = event.target.value;
         if (event.key === "Enter") {
             setLoader(true);
             const code = term.split(",").join("");
-            console.log(code);
-            setLocationSub(term);
-            setTimeout(()=> setLoader(false), 2000);
+            fetchLocationByPostCode(code).then((data: UserLocation) => {
+                dispatch(setCurentLocation(data));
+            }).finally(() => {
+                setLoader(false);
+                setIsOpen(false);
+            });
         }
     }
 
     return (
-        <Popover radius="sm" classNames={{ content: "p-2" }} showArrow backdrop="blur" offset={10} placement="left">
+        <Popover isOpen={isOpen} onOpenChange={(open) => setIsOpen(open)} radius="sm" classNames={{ content: "p-2" }} showArrow backdrop="blur" offset={10} placement="left">
             <PopoverTrigger>
                 <button className="text-xs outline-none">
                     <div className="flex flex-col items-end">
-                        <span className="font-bold text-sm">{locationHead}</span>
+                        <span className="font-bold text-xs">{locationHead}</span>
                         <span className="flex items-center gap-1"> <MapPinIcon className="size-4" /> {locationSub}</span>
                     </div>
                 </button>
