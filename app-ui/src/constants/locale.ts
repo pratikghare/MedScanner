@@ -58,3 +58,5 @@ export const NavigationTabKeys = {
     nearBy: "nearBy",
     account: "account"
 } as const;
+
+export type NavigationKeyType = (typeof NavigationTabKeys)[keyof typeof NavigationTabKeys];

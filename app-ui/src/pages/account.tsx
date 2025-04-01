@@ -101,6 +101,7 @@ export default function Account() {
     const updateTheme = (theme: Theme) => {
         dispatch(setReducerTheme(theme));
         setStorageTheme(theme);
+        window.location.reload();
     }
 
     const Avatar = () => {

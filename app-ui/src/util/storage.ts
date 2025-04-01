@@ -1,7 +1,8 @@
-import { Theme, Themes } from "../constants/locale";
+import { NavigationKeyType, NavigationTabKeys, Theme, Themes } from "../constants/locale";
 
 const USER_KEY = "key";
 const THEME_KEY = "theme";
+const CURRENT_TAB = "tab";
 
 export const setUserStorage = (value: string, locally: boolean = false): void => {
     sessionStorage.setItem(USER_KEY, value);
@@ -22,3 +23,9 @@ export const getStorageTheme = (): Theme | null => getThemeType(localStorage.get
 export const getThemeType = (theme: string | null): Theme | null => Themes.dark === theme ? Themes.dark : Themes.light === theme ? Themes.light : Themes.system === theme ? Themes.system : null;
 export const getThemeTypeDefined = (theme: string | null, current: Theme): Theme => Themes.dark === theme ? Themes.dark : Themes.light === theme ? Themes.light : Themes.system === theme ? Themes.system : current;
 
+
+export const setCurrentTabStorage = (tab: NavigationKeyType) => sessionStorage.setItem(CURRENT_TAB, tab);
+export const getCurrentTabStorage = (): NavigationKeyType => {
+    const tab: any = sessionStorage.getItem(CURRENT_TAB);
+    return tab ? tab : NavigationTabKeys.account;
+}

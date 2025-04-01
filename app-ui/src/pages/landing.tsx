@@ -1,15 +1,15 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useLayoutEffect, useState } from "react";
 import NavigationTabs from "../components/navigation-tabs";
 import LoginDrawer from "../components/login-drawer";
-import { NavigationTabKeys } from "../constants/locale";
+import { NavigationKeyType, NavigationTabKeys } from "../constants/locale";
 import Home from "./home";
 import { useSelector } from "react-redux";
 import { currentUserSelector } from "../store/selectors";
 import { User } from "../models/user-context";
 import Account from "./account";
+import { getCurrentTabStorage, setCurrentTabStorage } from "../util/storage";
 
 export default function Landing() {
-    type NavigationKeyType = (typeof NavigationTabKeys)[keyof typeof NavigationTabKeys];
 
     const tabs: Record<string, ReactNode> = {
         home: <Home /> ,
@@ -21,15 +21,13 @@ export default function Landing() {
     const [selected, setSelected] = useState<NavigationKeyType>(NavigationTabKeys.home);
     const loggedInUser: User = useSelector(currentUserSelector);
 
-    // useEffect(() => {
-    //     console.log(loggedInUser)
-    //     // updateAll();
-    // }, [loggedInUser])
+    useEffect(() => updateSelected(getCurrentTabStorage(), true), []);
 
     const updateSelected = (key: NavigationKeyType, force: boolean = false) => {
         setSelectedKey(key);
         if(loggedInUser.isLoggedIn || key !== NavigationTabKeys.account || force) {
             setSelected(key);
+            setCurrentTabStorage(key);
         }
     }
     const updateAll = () => {
